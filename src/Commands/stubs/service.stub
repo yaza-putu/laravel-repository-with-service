@@ -3,6 +3,7 @@
 namespace {namespace};
 
 use {repositoryInterfaceNamespace}\{repositoryInterface};
+
 class {serviceName} {
 
     /**

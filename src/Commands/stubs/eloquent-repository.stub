@@ -2,7 +2,6 @@
 
 namespace {namespace};
 
-use LaravelEasyRepository\Repository;
 use LaravelEasyRepository\Implementations\Eloquent;
 use {repositoryInterfaceNamespace}\{repositoryInterfaceName};
 
