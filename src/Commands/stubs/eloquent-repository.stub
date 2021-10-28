@@ -1,0 +1,24 @@
+<?php
+
+namespace {namespace};
+
+use LaravelEasyRepository\Repository;
+use LaravelEasyRepository\Implementations\Eloquent;
+use {repositoryInterfaceNamespace}\{repositoryInterfaceName};
+
+class {repositoryName} extends Eloquent implements {repositoryInterfaceName}{
+
+    /**
+    * Model class to be used in this repository for the common methods inside Eloquent
+    * Don't remove or change variable $model or $this->model
+    * @property Model|mixed $model;
+    */
+    protected $model;
+
+    public function __construct(Model $model)
+    {
+        $this->model = $model;
+    }
+
+    // Write something awesome :)
+}

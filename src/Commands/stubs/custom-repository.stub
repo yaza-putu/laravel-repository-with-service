@@ -1,0 +1,11 @@
+<?php
+
+namespace {namespace};
+
+use LaravelEasyRepository\Repository;
+use {repositoryInterfaceNamespace}\{repositoryInterfaceName};
+
+class {repositoryName} implements {repositoryInterfaceName}{
+
+    // Write something awesome :)
+}

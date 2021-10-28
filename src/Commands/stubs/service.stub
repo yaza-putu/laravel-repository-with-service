@@ -1,0 +1,19 @@
+<?php
+
+namespace {namespace};
+
+use {repositoryInterfaceNamespace}\{repositoryInterface};
+class {serviceName} {
+
+    /**
+    * The repository interface to use in this service.
+    */
+    protected $mainRepository;
+
+    public function __construct({repositoryInterface} $mainRepository)
+    {
+        $this->mainRepository = $mainRepository;
+    }
+
+    // Define your custom methods :)
+}

@@ -1,0 +1,10 @@
+<?php
+
+namespace {namespace};
+
+use LaravelEasyRepository\Repository;
+
+interface {repositoryInterfaceName} extends Repository{
+
+    // Write something awesome :)
+}
