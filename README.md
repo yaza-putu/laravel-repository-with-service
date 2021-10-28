@@ -4,7 +4,7 @@ With easy repository, you can have the power of the repository pattern, without 
 
 [![Total Downloads](https://img.shields.io/packagist/dt/yaza/laravel-repository-service?color=brightgreen&style=flat-square)](https://github.com/yaza-putu/laravel-repository-with-service)
 [![PHP](https://img.shields.io/packagist/php-v/yaza/laravel-repository-service?color=yellow&style=flat-square)]()
-[![Version](https://img.shields.io/packagist/v/yaza/laravel-repository-service?color=blue)]()
+[![Version](https://img.shields.io/packagist/v/yaza/laravel-repository-service?color=blue&style=flat-square)]()
 
 ## Requirement
 
