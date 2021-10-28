@@ -2,6 +2,8 @@
 
 With easy repository, you can have the power of the repository pattern, without having to write too much code altogether. The package automatically binds the interfaces to the implementations, all you have to do is change in the configuration which implementation is being used at the moment!
 
+[![Total Downloads](https://img.shields.io/packagist/dt/yaza/laravel-repository-service?color=brightgreen&style=flat-square)](https://github.com/yaza-putu/laravel-repository-with-service)
+
 ## Requirement
 
 - Laravel 8
