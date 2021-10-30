@@ -16,6 +16,13 @@ interface Repository
     public function find(int $id);
 
     /**
+     * find or fail
+     * @param int $id
+     * @return mixed
+     */
+    public function findOrFail(int $id);
+
+    /**
      * Return all items
      * @return Collection|null
      */

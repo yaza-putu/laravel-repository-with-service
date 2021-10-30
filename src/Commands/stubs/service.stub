@@ -2,9 +2,10 @@
 
 namespace {namespace};
 
+use LaravelEasyRepository\Service;
 use {repositoryInterfaceNamespace}\{repositoryInterface};
 
-class {serviceName} {
+class {serviceName} extends Service {
 
     /**
     * The repository interface to use in this service.

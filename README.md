@@ -2,10 +2,6 @@
 
 With easy repository, you can have the power of the repository pattern, without having to write too much code altogether. The package automatically binds the interfaces to the implementations, all you have to do is change in the configuration which implementation is being used at the moment!
 
-[![Total Downloads](https://img.shields.io/packagist/dt/yaza/laravel-repository-service?color=brightgreen&style=flat-square)](https://github.com/yaza-putu/laravel-repository-with-service)
-[![PHP](https://img.shields.io/packagist/php-v/yaza/laravel-repository-service?color=yellow&style=flat-square)]()
-[![Version](https://img.shields.io/packagist/v/yaza/laravel-repository-service?color=blue&style=flat-square)]()
-
 ## Requirement
 
 - Laravel 8
@@ -103,7 +99,7 @@ class UserRepository extends Eloquent implements UserRepositoryInterface{
 
 ```
 
-also if you included the services flag, or created one by running a command, the service file generated is:
+also if you included the services flag, or created one by running a command, the service file generated, the service only call interfaces and automatically bind to repository.
 
 ```php
 // app/Services/UserService
@@ -129,7 +125,7 @@ class UserService {
 }
 
 ```
-In your controller you can use the service but only call interfaces auto bind to repository.
+In your controller you can use like
 
 ```php
 <?php
@@ -166,6 +162,13 @@ interface Repository
      * @return Model|null
      */
     public function find(int $id);
+
+    /**
+     * Find or fail an item by id
+     * @param int $id
+     * @return Model|null
+     */
+    public function findOrFail(int $id);
 
     /**
      * Return all items

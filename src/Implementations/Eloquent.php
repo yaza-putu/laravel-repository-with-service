@@ -20,6 +20,16 @@ class Eloquent implements Repository
     }
 
     /**
+     * find Or Fail
+     * @param $id
+     * @return mixed
+     */
+    public function findOrFail(int $id)
+    {
+        return $this->model->findOrFail($id);
+    }
+
+    /**
      * Return all items
      * @return Collection|null
      */
