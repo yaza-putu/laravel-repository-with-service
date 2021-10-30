@@ -12,14 +12,14 @@ With easy repository, you can have the power of the repository pattern, without 
 You can install the package via composer:
 
 ```bash
-composer require yaza/laravel-repository-service
+$ composer require yaza/laravel-repository-service
 ```
 
 ## Quick usage
 
 This package overrides the default laravel `php artisan make:model User` command, and adds a few flags that can help you set up repository and service quickly.
 
-```php
+```bash
 // will genearate controller, factory, service, seeder, repository, resource and migration
 php artisan make:model User --all
 
@@ -32,7 +32,7 @@ php artisan make:model User -sr -rt
 
 You can also create only the repository, or service, or both:
 
-```php
+```bash
 php artisan make:repository User
 // or
 php artisan make:repository UserRepository
@@ -111,10 +111,20 @@ namespace App\Services;
 use {repositoryInterfaceNamespace}\{repositoryInterface};
 class UserService {
 
-     /**
-    * The repository interface to use in this service.
-    */
-    protected $mainRepository;
+   /**
+     * interface name registered in container
+     * @var string
+     */
+     protected $interfaceName = '{repositoryInterface}';
+     protected $mainRepository;
+
+    public function __construct({repositoryInterface} $mainRepository)
+    {
+        $this->initialiseRepository();
+        $this->mainRepository = $mainRepository;
+    }
+
+    // Define your custom methods :)
 
     public function __construct({repositoryInterface} $mainRepository)
     {
@@ -227,10 +237,20 @@ use {repositoryInterfaceNamespace}\{repositoryInterface};
 class UserService {
  use ResultService;
 
-     /**
-    * The repository interface to use in this service.
-    */
-    protected $mainRepository;
+   /**
+     * interface name registered in container
+     * @var string
+     */
+     protected $interfaceName = '{repositoryInterface}';
+     protected $mainRepository;
+
+    public function __construct({repositoryInterface} $mainRepository)
+    {
+        $this->initialiseRepository();
+        $this->mainRepository = $mainRepository;
+    }
+
+    // Define your custom methods :)
 
     public function __construct({repositoryInterface} $mainRepository)
     {
