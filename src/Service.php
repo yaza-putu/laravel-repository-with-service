@@ -80,6 +80,16 @@ class Service
     }
 
     /**
+     * multiple delete
+     * @param array $id
+     * @return mixed
+     */
+    public function destroy(array $id)
+    {
+        return $this->repository->destroy($id);
+    }
+
+    /**
      * Initialize repository from the container
      * @return Repository|Exception|mixed
      */
