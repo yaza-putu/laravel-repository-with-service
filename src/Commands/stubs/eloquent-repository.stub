@@ -10,7 +10,7 @@ class {repositoryName} extends Eloquent implements {repositoryInterfaceName}{
 
     /**
     * Model class to be used in this repository for the common methods inside Eloquent
-    * Don't remove or change variable $model or $this->model
+    * Don't remove or change $this->model variable name
     * @property Model|mixed $model;
     */
     protected $model;

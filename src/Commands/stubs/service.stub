@@ -8,7 +8,7 @@ use {repositoryInterfaceNamespace}\{repositoryInterface};
 class {serviceName} extends Service {
 
      /**
-     * don't change variable name $this->mainRepository
+     * don't change $this->mainRepository variable name
      * because used in service class
      */
      protected $mainRepository;
