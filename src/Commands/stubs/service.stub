@@ -9,12 +9,15 @@ class {serviceName} extends Service {
 
     /**
     * The repository interface to use in this service.
+    * don't change variable name $mainRepository or $this->mainRepository
+    * this variable registered in container laravel
     */
     protected $mainRepository;
 
     public function __construct({repositoryInterface} $mainRepository)
     {
         $this->mainRepository = $mainRepository;
+        $this->initialiseRepository();
     }
 
     // Define your custom methods :)

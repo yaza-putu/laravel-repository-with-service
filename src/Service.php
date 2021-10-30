@@ -14,13 +14,14 @@ class Service
     protected Repository $repository;
 
     /**
-     * Find an item by id
-     * @param int $id
-     * @return Model|null
+     * The repository interface to use in this service. Will allow to use within
+     * methods $this->repository. It will be resolved from the container
+     * @property string $repositoryInterface;
      */
-    public function find(int $id)
+    protected $mainRepository = "";
+
+    public function __construct()
     {
-        return $this->repository->find($id);
     }
 
     /**
@@ -28,9 +29,9 @@ class Service
      * @param int $id
      * @return Model|null
      */
-    public function findOrFail(int $id)
+    public function find(int $id)
     {
-        return $this->repository->findOrFail($id);
+        return $this->repository->find($id);
     }
 
     /**
@@ -79,5 +80,20 @@ class Service
     public function delete($id)
     {
         return $this->repository->delete($id);
+    }
+
+    /**
+     * Initialize repository from the container
+     * @return Repository|Exception|mixed
+     */
+    public function initialiseRepository()
+    {
+        if (
+            $this->mainRepository == null
+        ) {
+            throw new Exception("Please define the repository interface");
+        }
+        $class = 'App\\Repositories\\Interfaces\\'.class_basename($this->mainRepository).'Interface';
+        $this->repository = app()->make($class);
     }
 }
