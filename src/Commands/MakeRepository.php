@@ -109,6 +109,7 @@ class MakeRepository extends Command
             "{repositoryName}" => $repositoryName,
             "{repositoryInterfaceNamespace}" => $this->getRepositoryInterfaceNamespace($className),
             "{repositoryInterfaceName}" => $className . "RepositoryInterface",
+            "{ModelName}"   => $className
         ];
 
         $stubName = $isDefault ? "eloquent-repository.stub" : "custom-repository.stub";

@@ -4,6 +4,7 @@ namespace {namespace};
 
 use LaravelEasyRepository\Implementations\Eloquent;
 use {repositoryInterfaceNamespace}\{repositoryInterfaceName};
+use App\Models\{ModelName};
 
 class {repositoryName} extends Eloquent implements {repositoryInterfaceName}{
 
@@ -14,7 +15,7 @@ class {repositoryName} extends Eloquent implements {repositoryInterfaceName}{
     */
     protected $model;
 
-    public function __construct(Model $model)
+    public function __construct({ModelName} $model)
     {
         $this->model = $model;
     }
