@@ -112,26 +112,17 @@ use {repositoryInterfaceNamespace}\{repositoryInterface};
 class UserService {
 
    /**
-     * interface name registered in container
-     * @var string
-     */
-     protected $interfaceName = '{repositoryInterface}';
-     protected $mainRepository;
+   * don't change $this->mainRepository variable name
+   * because used in service class
+   */
+   protected $mainRepository;
 
-    public function __construct({repositoryInterface} $mainRepository)
-    {
-        $this->initialiseRepository();
-        $this->mainRepository = $mainRepository;
-    }
+  public function __construct({repositoryInterface} $mainRepository)
+  {
+    $this->mainRepository = $mainRepository;
+  }
 
-    // Define your custom methods :)
-
-    public function __construct({repositoryInterface} $mainRepository)
-    {
-        $this->mainRepository = $mainRepository;
-    }
-
-    // Define your custom methods :)
+   // Define your custom methods :)
 }
 
 ```
@@ -237,25 +228,18 @@ use {repositoryInterfaceNamespace}\{repositoryInterface};
 class UserService {
  use ResultService;
 
-   /**
-     * interface name registered in container
-     * @var string
-     */
-     protected $interfaceName = '{repositoryInterface}';
-     protected $mainRepository;
+  /**
+    * don't change $this->mainRepository variable name
+    * because used in service class
+    */
+    protected $mainRepository;
 
-    public function __construct({repositoryInterface} $mainRepository)
-    {
-        $this->initialiseRepository();
-        $this->mainRepository = $mainRepository;
-    }
+   public function __construct({repositoryInterface} $mainRepository)
+   {
+     $this->mainRepository = $mainRepository;
+   }
 
     // Define your custom methods :)
-
-    public function __construct({repositoryInterface} $mainRepository)
-    {
-        $this->mainRepository = $mainRepository;
-    }
     
     public function all () {
         try {
