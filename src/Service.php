@@ -6,20 +6,7 @@ use Exception;
 
 class Service
 {
-    /**
-     * Repository object to perform CRUD fuctionalities. It is required in the
-     * base Service class
-     * @property Repository $mainRepository;
-     */
-    protected Repository $mainRepository;
-
-    /**
-     * The repository interface to use in this service. Will allow to use within
-     * methods $this->repository. It will be resolved from the container
-     * @property string $interfaceName;
-     */
-    protected string $interfaceName = "";
-
+    protected $mainRepository;
 
     /**
      * Find an item by id
@@ -87,20 +74,5 @@ class Service
     public function destroy(array $id)
     {
         return $this->mainRepository->destroy($id);
-    }
-
-    /**
-     * Initialize repository from the container
-     * @return Repository|Exception|mixed
-     */
-    public function initialiseRepository()
-    {
-        if (
-            $this->interfaceName == null ||
-            $this->interfaceName == ""
-        ) {
-            throw new Exception("Please define the repository interface");
-        }
-        $this->repository = app()->make($this->interfaceName);
     }
 }
