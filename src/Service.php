@@ -16,13 +16,10 @@ class Service
     /**
      * The repository interface to use in this service. Will allow to use within
      * methods $this->repository. It will be resolved from the container
-     * @property string $repositoryInterface;
+     * @property string $interfaceName;
      */
-    protected $mainRepository = "";
+    protected $interfaceName = "";
 
-    public function __construct()
-    {
-    }
 
     /**
      * Find an item by id
@@ -89,11 +86,13 @@ class Service
     public function initialiseRepository()
     {
         if (
-            $this->mainRepository == null
+            $this->interfaceName == null ||
+            ! is_string($this->interfaceName) ||
+            $this->interfaceName == ""
         ) {
             throw new Exception("Please define the repository interface");
         }
-        $class = 'App\\Repositories\\Interfaces\\'.class_basename($this->mainRepository).'Interface';
+        $class = 'App\\Repositories\\Interfaces\\'.$this->interfaceName;
         $this->repository = app()->make($class);
     }
 }

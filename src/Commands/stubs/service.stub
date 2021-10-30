@@ -7,17 +7,17 @@ use {repositoryInterfaceNamespace}\{repositoryInterface};
 
 class {serviceName} extends Service {
 
-    /**
-    * The repository interface to use in this service.
-    * don't change variable name $mainRepository or $this->mainRepository
-    * this variable registered in container laravel
-    */
-    protected $mainRepository;
+     /**
+     * interface name registered in container
+     * @var string
+     */
+     protected $interfaceName = '{repositoryInterface}';
+     protected $mainRepository;
 
     public function __construct({repositoryInterface} $mainRepository)
     {
-        $this->mainRepository = $mainRepository;
         $this->initialiseRepository();
+        $this->mainRepository = $mainRepository;
     }
 
     // Define your custom methods :)
