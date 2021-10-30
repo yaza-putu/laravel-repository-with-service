@@ -8,16 +8,17 @@ use {repositoryInterfaceNamespace}\{repositoryInterface};
 class {serviceName} extends Service {
 
      /**
-     * interface name registered in container
+     * {repositoryInterface} automatically register in {serviceName}
+     * just call with $this->mainRepository
+     * ex : $this->mainRepository->method()
      * @var string
      */
-     protected $interfaceName = '{repositoryInterface}';
-     protected $mainRepository;
+     protected $interfaceName = {repositoryInterface}::class;
 
-    public function __construct({repositoryInterface} $mainRepository)
+    public function __construct()
     {
         $this->initialiseRepository();
-        $this->mainRepository = $mainRepository;
+        // call another interface or service below
     }
 
     // Define your custom methods :)

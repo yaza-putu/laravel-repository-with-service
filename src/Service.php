@@ -9,9 +9,9 @@ class Service
     /**
      * Repository object to perform CRUD fuctionalities. It is required in the
      * base Service class
-     * @property Repository $repository;
+     * @property Repository $mainRepository;
      */
-    protected Repository $repository;
+    protected Repository $mainRepository;
 
     /**
      * The repository interface to use in this service. Will allow to use within
@@ -28,7 +28,7 @@ class Service
      */
     public function find(int $id)
     {
-        return $this->repository->find($id);
+        return $this->mainRepository->find($id);
     }
 
     /**
@@ -37,7 +37,7 @@ class Service
      */
     public function all()
     {
-        return $this->repository->all();
+        return $this->mainRepository->all();
     }
 
     /**
@@ -46,7 +46,7 @@ class Service
      */
     public function query()
     {
-        return $this->repository->query();
+        return $this->mainRepository->query();
     }
 
     /**
@@ -56,7 +56,7 @@ class Service
      */
     public function create($data)
     {
-        return $this->repository->create($data);
+        return $this->mainRepository->create($data);
     }
 
     /**
@@ -67,7 +67,7 @@ class Service
      */
     public function update($id, array $data)
     {
-        return $this->repository->update($id, $data);
+        return $this->mainRepository->update($id, $data);
     }
 
     /**
@@ -76,7 +76,7 @@ class Service
      */
     public function delete($id)
     {
-        return $this->repository->delete($id);
+        return $this->mainRepository->delete($id);
     }
 
     /**
@@ -86,7 +86,7 @@ class Service
      */
     public function destroy(array $id)
     {
-        return $this->repository->destroy($id);
+        return $this->mainRepository->destroy($id);
     }
 
     /**
@@ -97,12 +97,10 @@ class Service
     {
         if (
             $this->interfaceName == null ||
-            ! is_string($this->interfaceName) ||
             $this->interfaceName == ""
         ) {
             throw new Exception("Please define the repository interface");
         }
-        $class = 'App\\Repositories\\Interfaces\\'.$this->interfaceName;
-        $this->repository = app()->make($class);
+        $this->repository = app()->make($this->interfaceName);
     }
 }
