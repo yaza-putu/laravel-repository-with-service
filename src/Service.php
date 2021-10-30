@@ -6,7 +6,6 @@ use Exception;
 
 class Service
 {
-    protected $mainRepository;
 
     /**
      * Find an item by id
