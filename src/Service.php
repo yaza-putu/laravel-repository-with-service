@@ -18,7 +18,7 @@ class Service
      * methods $this->repository. It will be resolved from the container
      * @property string $interfaceName;
      */
-    protected $interfaceName = "";
+    protected string $interfaceName = "";
 
 
     /**
