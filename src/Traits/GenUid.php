@@ -13,7 +13,7 @@ trait GenUid
         parent::boot();
         static::creating(function ($model) {
             if (empty($model->{$model->getKeyName()})) {
-                $model->{$model->getKeyName()} = uid();
+                $model->{$model->getKeyName()} = $this->uid();
             }
         });
     }
@@ -36,5 +36,15 @@ trait GenUid
     public function getKeyType()
     {
         return 'string';
+    }
+
+    /**
+     * gen uid
+     * @param int $limit
+     * @return false|string
+     */
+    public function uid($limit = 9)
+    {
+        return substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $limit);
     }
 }
