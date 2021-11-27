@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelEasyRepository\Mutators;
+namespace LaravelEasyRepository\Traits;
 
 
 trait GenUid
