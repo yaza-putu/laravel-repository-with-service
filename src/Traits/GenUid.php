@@ -13,7 +13,7 @@ trait GenUid
         parent::boot();
         static::creating(function ($model) {
             if (empty($model->{$model->getKeyName()})) {
-                $model->{$model->getKeyName()} = $this->uid();
+                $model->{$model->getKeyName()} = $model->uid();
             }
         });
     }
