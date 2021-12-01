@@ -8,14 +8,14 @@ use {repositoryInterfaceNamespace}\{repositoryInterface};
 class {serviceName} extends Service {
 
      /**
-     * don't change $this->mainRepository variable name
-     * because used in service class
+     * don't change $this->mainInterface variable name
+     * because used in extends service class
      */
-     protected $mainRepository;
+     protected $mainInterface;
 
-    public function __construct({repositoryInterface} $mainRepository)
+    public function __construct({repositoryInterface} $mainInterface)
     {
-      $this->mainRepository = $mainRepository;
+      $this->mainInterface = $mainInterface;
     }
 
     // Define your custom methods :)
