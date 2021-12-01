@@ -124,7 +124,7 @@ trait ResultService
         }
         if (config('app.debug')) {
             return $this->setStatus(false)
-                ->setMessage($exception->getMessage(). 'on line '. $exception->getLine())
+                ->setMessage($exception->getMessage(). 'on line '. $exception->getLine() .'on file '. $exception->getFile())
                 ->setCode(400);
         }
 
