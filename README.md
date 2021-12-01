@@ -15,6 +15,51 @@ You can install the package via composer:
 $ composer require yaza/laravel-repository-service
 ```
 
+Publish the config file with (Important):
+
+```bash
+php artisan vendor:publish --provider="LaravelEasyRepository\LaravelEasyRepositoryServiceProvider" --tag="easy-repository-config"
+```
+
+The configurations in the config file are standard, and can be extended with/depending on further requirements. No need to change any of the contents, unless you are very aware of what you are doing :)
+This is the contents of the published config file:
+
+```php
+
+return [
+    /**
+     * The directory for all the repositories
+     */
+    "repository_directory" => "app/Repositories",
+
+    /**
+     * Default repository namespace
+     */
+    "repository_namespace" => "App\Repositories",
+
+    /**
+     * The directory for all the services
+     */
+    "service_directory" => "app/Services",
+
+    /**
+     * Default service namespace
+     */
+    "service_namespace" => "App\Services",
+
+    /**
+     * Default repository implementation
+     */
+    "default_repository_implementation" => "Eloquent",
+
+    /**
+     * Current repository implementation
+     */
+    "current_repository_implementation" => "Eloquent",
+];
+
+```
+
 ## Quick usage
 
 This package overrides the default laravel `php artisan make:model User` command, and adds a few flags that can help you set up repository and service quickly.
@@ -303,50 +348,6 @@ class UserController extends Controller
 }
 ```
 
-## You can publish the config file with:
-
-```bash
-php artisan vendor:publish --provider="LaravelEasyRepository\LaravelEasyRepositoryServiceProvider" --tag="easy-repository-config"
-```
-
-The configurations in the config file are standard, and can be extended with/depending on further requirements. No need to change any of the contents, unless you are very aware of what you are doing :)
-This is the contents of the published config file:
-
-```php
-
-return [
-    /**
-     * The directory for all the repositories
-     */
-    "repository_directory" => "app/Repositories",
-
-    /**
-     * Default repository namespace
-     */
-    "repository_namespace" => "App\Repositories",
-
-    /**
-     * The directory for all the services
-     */
-    "service_directory" => "app/Services",
-
-    /**
-     * Default service namespace
-     */
-    "service_namespace" => "App\Services",
-
-    /**
-     * Default repository implementation
-     */
-    "default_repository_implementation" => "Eloquent",
-
-    /**
-     * Current repository implementation
-     */
-    "current_repository_implementation" => "Eloquent",
-];
-
-```
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
