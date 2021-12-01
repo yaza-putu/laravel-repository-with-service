@@ -84,6 +84,6 @@ class Eloquent implements Repository
      */
     public function delete($id)
     {
-        return $this->model->delete($id);
+        return $this->model->findOrFail($id)->delete();
     }
 }
