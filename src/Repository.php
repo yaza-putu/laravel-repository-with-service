@@ -10,17 +10,17 @@ interface Repository
 {
     /**
      * Fin an item by id
-     * @param int $id
+     * @param mixed $id
      * @return Model|null
      */
-    public function find(int $id);
+    public function find($id);
 
     /**
      * find or fail
-     * @param int $id
+     * @param mixed $id
      * @return mixed
      */
-    public function findOrFail(int $id);
+    public function findOrFail($id);
 
     /**
      * Return all items

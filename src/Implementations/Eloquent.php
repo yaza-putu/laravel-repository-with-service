@@ -11,10 +11,10 @@ class Eloquent implements Repository
 {
     /**
      * Fin an item by id
-     * @param int $id
+     * @param mixed $id
      * @return Model|null
      */
-    public function find(int $id)
+    public function find($id)
     {
         return $this->model->find($id);
     }
@@ -24,7 +24,7 @@ class Eloquent implements Repository
      * @param $id
      * @return mixed
      */
-    public function findOrFail(int $id)
+    public function findOrFail($id)
     {
         return $this->model->findOrFail($id);
     }
