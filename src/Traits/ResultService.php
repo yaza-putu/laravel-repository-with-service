@@ -123,8 +123,15 @@ trait ResultService
                 ->setCode(404);
         }
         if (config('app.debug')) {
+            $message = (object) [
+                'exception' => 'Error',
+                'message' => $exception->getMessage(),
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+                'trace' => $exception->getTrace()
+            ];
             return $this->setStatus(false)
-                ->setMessage($exception->getMessage(). ' on line '. $exception->getLine() .', on file '. $exception->getFile())
+                ->setMessage($message)
                 ->setCode(400);
         }
 
