@@ -125,7 +125,7 @@ trait ResultService
         if (config('app.debug')) {
             $message = (object) [
                 'exception' => 'Error',
-                'message' => $exception->getMessage(),
+                'error_message' => $exception->getMessage(),
                 'file' => $exception->getFile(),
                 'line' => $exception->getLine(),
                 'trace' => $exception->getTrace()
