@@ -132,11 +132,11 @@ trait ResultService
             ];
             return $this->setStatus(false)
                 ->setMessage($message)
-                ->setCode(400);
+                ->setCode(500);
         }
 
         return $this->setStatus(false)
             ->setMessage('Terjadi suatu kesalahan!')
-            ->setCode(400);
+            ->setCode(500);
     }
 }
