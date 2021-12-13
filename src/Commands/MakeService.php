@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use LaravelEasyRepository\AssistCommand;
 use LaravelEasyRepository\CreateFile;
+use File;
 
 class MakeService extends Command
 {
@@ -34,21 +35,26 @@ class MakeService extends Command
      */
     public function createService(string $className)
     {
-        $serviceName = $className . config("easy-repository.service_suffix");
+        $nameOfService = $this->getServiceName($className);
+        $serviceName = $nameOfService . config("easy-repository.service_suffix");
+        $namespace = $this->getNameSpace($className);
         $stubProperties = [
-            "{namespace}" => config("easy-repository.service_namespace"),
+            "{namespace}" => $namespace,
             "{serviceName}" => $serviceName,
-            "{repositoryInterface}" => $this->getRepositoryInterfaceName($className),
-            "{repositoryInterfaceNamespace}" => $this->getRepositoryInterfaceNamespace($className),
+            "{repositoryInterface}" => $this->getRepositoryInterfaceName($nameOfService),
+            "{repositoryInterfaceNamespace}" => $this->getRepositoryInterfaceNamespace($nameOfService),
         ];
-
+        // check folder exist
+        $folder = str_replace('\\','/', $namespace);
+        if (!file_exists($folder)) {
+            File::makeDirectory($folder, 0775, true, true);
+        }
+        // create file
         new CreateFile(
             $stubProperties,
             $this->getServicePath($className),
             __DIR__ . "/stubs/service.stub"
         );
-
-
         $this->line("<info>Created service:</info> {$serviceName}");
     }
 
@@ -92,5 +98,33 @@ class MakeService extends Command
     private function checkIfRequiredDirectoriesExist()
     {
         $this->ensureDirectoryExists(config("easy-repository.service_directory"));
+    }
+
+    /**
+     * get service name
+     * @param $className
+     * @return string
+     */
+    private function getServiceName($className):string {
+        $explode = explode('/', $className);
+        return $explode[array_key_last($explode)];
+    }
+
+    /**
+     * get namespace
+     * @param $className
+     * @return string
+     */
+    private function getNameSpace($className):string {
+        $explode = explode('/', $className);
+        if (count($explode) > 1) {
+            $namespace = '';
+            for($i=0; $i < count($explode)-1; $i++) {
+                $namespace .= '\\'.$explode[$i];
+            }
+            return config("easy-repository.service_namespace").$namespace;
+        } else {
+            return config("easy-repository.service_namespace");
+        }
     }
 }
