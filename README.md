@@ -319,12 +319,7 @@ class UserController extends Controller
     
     public function all () {
       $result = $this->mainService->all();
-      return $this->responseJson(
-        $result->getStatus(),
-        $result->getMessage(),
-        $result->getResult(),
-        $result->getCode()
-      );
+      return $result->toJson();
     }
 
 }
