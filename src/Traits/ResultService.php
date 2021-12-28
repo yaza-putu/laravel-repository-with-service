@@ -139,4 +139,24 @@ trait ResultService
             ->setMessage('Terjadi suatu kesalahan!')
             ->setCode(500);
     }
+
+    /**
+     * response to json
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function toJson()
+    {
+        if(is_null($this->getCode())){
+            $http_code = $this->getStatus() ? 200 : 400;
+        }else{
+            $http_code = $this->getCode();
+        }
+
+        return response()->json([
+            'success' => $this->getStatus(),
+            'code' => $http_code,
+            'message' => $this->getMessage(),
+            'data' => $this->getResult(),
+        ], $http_code);
+    }
 }
