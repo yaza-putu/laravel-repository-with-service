@@ -4,8 +4,8 @@ With easy repository, you can have the power of the repository pattern, without 
 
 ## Requirement
 
-- Laravel 8
-- PHP 7.4||8.*
+- Laravel 9
+- PHP 8.0||8.1
 
 ## Installation
 
