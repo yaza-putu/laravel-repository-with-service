@@ -11,7 +11,7 @@ class {serviceName} extends Service {
      * don't change $this->mainRepository variable name
      * because used in extends service class
      */
-     protected mainRepository;
+     protected $mainRepository;
 
     public function __construct({repositoryName} $mainRepository)
     {
