@@ -14,7 +14,7 @@ class Service
      */
     public function find($id)
     {
-        return $this->mainRepository->find($id);
+        return $this->mainInterface->find($id);
     }
 
     /**
@@ -24,7 +24,7 @@ class Service
      */
     public function findOrFail($id)
     {
-        return $this->mainRepository->findOrFail($id);
+        return $this->mainInterface->findOrFail($id);
     }
 
     /**
@@ -33,7 +33,7 @@ class Service
      */
     public function all()
     {
-        return $this->mainRepository->all();
+        return $this->mainInterface->all();
     }
 
     /**
@@ -43,7 +43,7 @@ class Service
      */
     public function create($data)
     {
-        $this->mainRepository->create($data);
+        $this->mainInterface->create($data);
     }
 
     /**
@@ -54,7 +54,7 @@ class Service
      */
     public function update($id, array $data)
     {
-        $this->mainRepository->update($id, $data);
+        $this->mainInterface->update($id, $data);
     }
 
     /**
@@ -64,7 +64,7 @@ class Service
      */
     public function delete($id)
     {
-        $this->mainRepository->delete($id);
+        $this->mainInterface->delete($id);
     }
 
     /**
@@ -74,6 +74,6 @@ class Service
      */
     public function destroy(array $id)
     {
-        $this->mainRepository->destroy($id);
+        $this->mainInterface->destroy($id);
     }
 }

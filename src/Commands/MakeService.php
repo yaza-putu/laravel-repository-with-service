@@ -41,8 +41,8 @@ class MakeService extends Command
         $stubProperties = [
             "{namespace}" => $namespace,
             "{serviceName}" => $serviceName,
-            "{repositoryName}" => $this->getRepositoryName($nameOfService),
-            "{repositoryNamespace}" => $this->getRepositoryNamespace($nameOfService),
+            "{repositoryInterfaceName}" => $this->getRepositoryInterfaceName($nameOfService),
+            "{repositoryInterfaceNamespace}" => $this->getRepositoryInterfaceNamespace($nameOfService),
         ];
         // check folder exist
         $folder = str_replace('\\','/', $namespace);
