@@ -67,17 +67,7 @@ return [
 
 ## Quick usage
 
-This package overrides the default laravel `php artisan make:model User` command, and adds a few flags that can help you set up repository and service quickly.
-
-```bash
-// use the service and repository flag to generate the class
-php artisan make:model User --service --repository
-
-// use the short form to generate model with service and repository
-php artisan make:model User -sr -rt
-```
-
-You can also create only the repository, or service, or both:
+You can also create only the repository, or service, or both with artisan:
 
 ```bash
 php artisan make:repository User
