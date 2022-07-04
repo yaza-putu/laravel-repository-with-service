@@ -29,12 +29,6 @@ interface Repository
     public function all();
 
     /**
-     * Return query builder instance to perform more manouvers
-     * @return Builder|null
-     */
-    public function query();
-
-    /**
      * Create an item
      * @param array|mixed $data
      * @return Model|null
