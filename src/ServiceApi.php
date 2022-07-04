@@ -9,17 +9,17 @@ class ServiceApi
 {
     use ResultService;
 
-    public $title = "";
-    public $create_message = "";
-    public $update_message = "";
-    public $delete_message = "";
+    protected $title = "";
+    protected $create_message = "";
+    protected $update_message = "";
+    protected $delete_message = "";
 
     /**
      * Find an item by id
-     * @param int $id
+     * @param mixed $id
      * @return Model|null
      */
-    public function find(int $id)
+    public function find($id)
     {
         try {
             $result = $this->mainRepository->find($id);
@@ -33,10 +33,10 @@ class ServiceApi
 
     /**
      * Find an item by id or fail
-     * @param int $id
+     * @param mixed $id
      * @return Model|null
      */
-    public function findOrFail(int $id)
+    public function findOrFail($id)
     {
         try {
             $result = $this->mainRepository->findOrFail($id);

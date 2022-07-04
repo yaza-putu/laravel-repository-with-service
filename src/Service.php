@@ -9,20 +9,20 @@ class Service
 
     /**
      * Find an item by id
-     * @param int $id
+     * @param mixed $id
      * @return Model|null
      */
-    public function find(int $id)
+    public function find($id)
     {
         return $this->mainRepository->find($id);
     }
 
     /**
      * Find an item by id or fail
-     * @param int $id
+     * @param mixed $id
      * @return Model|null
      */
-    public function findOrFail(int $id)
+    public function findOrFail($id)
     {
         return $this->mainRepository->findOrFail($id);
     }
