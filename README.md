@@ -70,9 +70,6 @@ return [
 This package overrides the default laravel `php artisan make:model User` command, and adds a few flags that can help you set up repository and service quickly.
 
 ```bash
-// will genearate controller, factory, service, seeder, repository, resource and migration
-php artisan make:model User --all
-
 // use the service and repository flag to generate the class
 php artisan make:model User --service --repository
 
@@ -158,18 +155,18 @@ also if you included the services flag, or created one by running a command, the
 
 namespace App\Services;
 
-use {repositoryInterfaceNamespace}\{repositoryInterface};
-class UserService {
+use App\Repository\Interfaces\UserRepositoryInterface;
+class UserService extends Service{
 
    /**
-   * don't change $this->mainRepository variable name
+   * don't change $this->mainInterface variable name
    * because used in service class
    */
-   protected $mainRepository;
+   protected $mainInterface;
 
-  public function __construct({repositoryInterface} $mainRepository)
+  public function __construct(UserRepositoryInterface $mainInterface)
   {
-    $this->mainRepository = $mainRepository;
+    $this->mainInterface = $mainInterface;
   }
 
    // Define your custom methods :)
@@ -188,13 +185,13 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function __construct(UserService $mainService)
+    public function __construct(UserService $userService)
     {
-        $this->mainService = $mainService;
+        $this->userService = $userService;
     }
     
     public function all () {
-      return $this->mainService->all();
+      return $this->userService->all();
     }
 
 }
@@ -226,12 +223,6 @@ interface Repository
      * @return Collection|null
      */
     public function all();
-
-    /**
-     * Return query builder instance to perform more manouvers
-     * @return Builder|null
-     */
-    public function query();
 
     /**
      * Create an item
@@ -272,28 +263,27 @@ interface Repository
 
 namespace App\Services;
 
-use LaravelEasyRepository\Traits\ResultService;
-use {repositoryInterfaceNamespace}\{repositoryInterface};
+use LaravelEasyRepository\ServiceApi; 
+use App\Repository\Interfaces\UserRepositoryInterface;
 
-class UserService {
- use ResultService;
+class UserService extends ServiceApi {
 
   /**
-    * don't change $this->mainRepository variable name
+    * don't change $this->mainInterface variable name
     * because used in service class
     */
-    protected $mainRepository;
+    protected $mainInterface;
 
-   public function __construct({repositoryInterface} $mainRepository)
+   public function __construct(UserRepositoryInterface $mainInterface)
    {
-     $this->mainRepository = $mainRepository;
+     $this->mainInterface = $mainInterface;
    }
 
     // Define your custom methods :)
     
     public function all () {
         try {
-            $result = $this->mainRepository->all();
+            $result = $this->mainInterface->all();
             return $this->setStatus(true)
                         ->setResult($result)
                         ->setCode(200)
@@ -323,8 +313,7 @@ class UserController extends Controller
     }
     
     public function all () {
-      $result = $this->mainService->all();
-      return $result->toJson();
+      return $this->mainService->all()->toJson();
     }
 
 }

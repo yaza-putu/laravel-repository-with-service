@@ -39,15 +39,6 @@ class Eloquent implements Repository
     }
 
     /**
-     * Return query builder instance to perform more manouvers
-     * @return Builder|null
-     */
-    public function query()
-    {
-        return $this->model->query();
-    }
-
-    /**
      * Create an item
      * @param array|mixed $data
      * @return Model|null

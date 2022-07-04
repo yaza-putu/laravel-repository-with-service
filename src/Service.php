@@ -9,12 +9,22 @@ class Service
 
     /**
      * Find an item by id
-     * @param int $id
+     * @param mixed $id
      * @return Model|null
      */
-    public function find(int $id)
+    public function find($id)
     {
         return $this->mainInterface->find($id);
+    }
+
+    /**
+     * Find an item by id or fail
+     * @param mixed $id
+     * @return Model|null
+     */
+    public function findOrFail($id)
+    {
+        return $this->mainInterface->findOrFail($id);
     }
 
     /**
@@ -27,51 +37,43 @@ class Service
     }
 
     /**
-     * Return query builder instance to perform more manouvers
-     * @return Builder|null
-     */
-    public function query()
-    {
-        return $this->mainInterface->query();
-    }
-
-    /**
      * Create an item
      * @param array|mixed $data
-     * @return Model|null
+     * @return void
      */
     public function create($data)
     {
-        return $this->mainInterface->create($data);
+        $this->mainInterface->create($data);
     }
 
     /**
      * Update a model
      * @param int|mixed $id
      * @param array|mixed $data
-     * @return bool|mixed
+     * @return void
      */
     public function update($id, array $data)
     {
-        return $this->mainInterface->update($id, $data);
+        $this->mainInterface->update($id, $data);
     }
 
     /**
      * Delete a model
      * @param int|Model $id
+     * @return void
      */
     public function delete($id)
     {
-        return $this->mainInterface->delete($id);
+        $this->mainInterface->delete($id);
     }
 
     /**
      * multiple delete
      * @param array $id
-     * @return mixed
+     * @return void
      */
     public function destroy(array $id)
     {
-        return $this->mainInterface->destroy($id);
+        $this->mainInterface->destroy($id);
     }
 }

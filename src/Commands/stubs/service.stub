@@ -3,7 +3,7 @@
 namespace {namespace};
 
 use LaravelEasyRepository\Service;
-use {repositoryInterfaceNamespace}\{repositoryInterface};
+use {repositoryInterfaceNamespace}\{repositoryInterfaceName};
 
 class {serviceName} extends Service {
 
@@ -13,7 +13,7 @@ class {serviceName} extends Service {
      */
      protected $mainInterface;
 
-    public function __construct({repositoryInterface} $mainInterface)
+    public function __construct({repositoryInterfaceName} $mainInterface)
     {
       $this->mainInterface = $mainInterface;
     }

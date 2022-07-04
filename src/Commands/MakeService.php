@@ -41,7 +41,7 @@ class MakeService extends Command
         $stubProperties = [
             "{namespace}" => $namespace,
             "{serviceName}" => $serviceName,
-            "{repositoryInterface}" => $this->getRepositoryInterfaceName($nameOfService),
+            "{repositoryInterfaceName}" => $this->getRepositoryInterfaceName($nameOfService),
             "{repositoryInterfaceNamespace}" => $this->getRepositoryInterfaceNamespace($nameOfService),
         ];
         // check folder exist
@@ -81,6 +81,16 @@ class MakeService extends Command
     }
 
     /**
+     * Get repository interface namespace
+     *
+     * @return string
+     */
+    private function getRepositoryNamespace(string $className)
+    {
+        return config("easy-repository.repository_namespace") . "\Eloquent";
+    }
+
+    /**
      * Get repository interface name
      *
      * @return string
@@ -88,6 +98,15 @@ class MakeService extends Command
     private function getRepositoryInterfaceName(string $className)
     {
         return $className . "RepositoryInterface";
+    }
+
+    /**
+     * get repository name
+     * @param string $className
+     * @return string
+     */
+    private function getRepositoryName(string $className) {
+        return $className. "Repository";
     }
 
     /**

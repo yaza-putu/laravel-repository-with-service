@@ -22,7 +22,7 @@ trait JsonValidateResponse
         $errors = (new ValidationException($validator))->errors();
 
         throw new HttpResponseException(
-            response()->json(['errors' => $errors], JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
+            response()->json(['errors' => $errors, 'success' => false, 'code' => 422, 'message' => 'validation error messages'], JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
         );
     }
 
