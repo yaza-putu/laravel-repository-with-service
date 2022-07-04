@@ -14,7 +14,17 @@ class Service
      */
     public function find(int $id)
     {
-        return $this->mainInterface->find($id);
+        return $this->mainRepository->find($id);
+    }
+
+    /**
+     * Find an item by id or fail
+     * @param int $id
+     * @return Model|null
+     */
+    public function findOrFail(int $id)
+    {
+        return $this->mainRepository->findOrFail($id);
     }
 
     /**
@@ -23,55 +33,47 @@ class Service
      */
     public function all()
     {
-        return $this->mainInterface->all();
-    }
-
-    /**
-     * Return query builder instance to perform more manouvers
-     * @return Builder|null
-     */
-    public function query()
-    {
-        return $this->mainInterface->query();
+        return $this->mainRepository->all();
     }
 
     /**
      * Create an item
      * @param array|mixed $data
-     * @return Model|null
+     * @return void
      */
     public function create($data)
     {
-        return $this->mainInterface->create($data);
+        $this->mainRepository->create($data);
     }
 
     /**
      * Update a model
      * @param int|mixed $id
      * @param array|mixed $data
-     * @return bool|mixed
+     * @return void
      */
     public function update($id, array $data)
     {
-        return $this->mainInterface->update($id, $data);
+        $this->mainRepository->update($id, $data);
     }
 
     /**
      * Delete a model
      * @param int|Model $id
+     * @return void
      */
     public function delete($id)
     {
-        return $this->mainInterface->delete($id);
+        $this->mainRepository->delete($id);
     }
 
     /**
      * multiple delete
      * @param array $id
-     * @return mixed
+     * @return void
      */
     public function destroy(array $id)
     {
-        return $this->mainInterface->destroy($id);
+        $this->mainRepository->destroy($id);
     }
 }

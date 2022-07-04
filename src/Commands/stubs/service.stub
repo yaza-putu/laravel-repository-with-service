@@ -3,19 +3,19 @@
 namespace {namespace};
 
 use LaravelEasyRepository\Service;
-use {repositoryInterfaceNamespace}\{repositoryInterface};
+use {repositoryNamespace}\{repositoryName};
 
 class {serviceName} extends Service {
 
      /**
-     * don't change $this->mainInterface variable name
+     * don't change $this->mainRepository variable name
      * because used in extends service class
      */
-     protected $mainInterface;
+     protected mainRepository;
 
-    public function __construct({repositoryInterface} $mainInterface)
+    public function __construct({repositoryName} $mainRepository)
     {
-      $this->mainInterface = $mainInterface;
+      $this->mainRepository = $mainRepository;
     }
 
     // Define your custom methods :)
