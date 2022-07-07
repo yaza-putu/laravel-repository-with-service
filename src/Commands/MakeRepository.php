@@ -81,7 +81,6 @@ class MakeRepository extends Command
         $repositoryInterfaceName = $className . config("easy-repository.repository_interface_suffix");
         $stubProperties = [
             "{namespace}" => $repositoryInterfaceNamespace,
-            "{folder}" => $className,
             "{repositoryInterfaceName}" => $repositoryInterfaceName,
         ];
 
@@ -111,7 +110,6 @@ class MakeRepository extends Command
         $repositoryName = $className . config("easy-repository.repository_suffix");
         $stubProperties = [
             "{namespace}" => $repositoryNamespace,
-            "{folder}" => $className,
             "{repositoryName}" => $repositoryName,
             "{repositoryInterfaceNamespace}" => $this->getRepositoryInterfaceNamespace($className),
             "{repositoryInterfaceName}" => $className . config("easy-repository.repository_interface_suffix"),

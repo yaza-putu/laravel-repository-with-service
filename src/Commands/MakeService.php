@@ -24,6 +24,8 @@ class MakeService extends Command
 
         $this->checkIfRequiredDirectoriesExist();
 
+        $this->createServiceInterface($className);
+
         $this->createService($className);
     }
 
@@ -41,6 +43,7 @@ class MakeService extends Command
         $stubProperties = [
             "{namespace}" => $namespace,
             "{serviceName}" => $serviceName,
+            "{serviceInterface}" => $className.config("easy-repository.service_interface_suffix"),
             "{repositoryInterfaceName}" => $this->getRepositoryInterfaceName($nameOfService),
             "{repositoryInterfaceNamespace}" => $this->getRepositoryInterfaceNamespace($nameOfService),
         ];
@@ -59,6 +62,35 @@ class MakeService extends Command
     }
 
     /**
+     * Create the service interface
+     *
+     * @param string $className
+     * @return void
+     */
+    public function createServiceInterface(string $className)
+    {
+        $nameOfService = $this->getServiceName($className);
+        $serviceName = $nameOfService . config("easy-repository.service_interface_suffix");
+        $namespace = $this->getNameSpace($className);
+        $stubProperties = [
+            "{namespace}" => $namespace,
+            "{serviceInterface}" => $className.config("easy-repository.service_interface_suffix"),
+        ];
+        // check folder exist
+        $folder = str_replace('\\','/', $namespace);
+        if (!file_exists($folder)) {
+            File::makeDirectory($folder, 0775, true, true);
+        }
+        // create file
+        new CreateFile(
+            $stubProperties,
+            $this->getServiceInterfacePath($className),
+            __DIR__ . "/stubs/service-interface.stub"
+        );
+        $this->line("<info>Created interface of service:</info> {$serviceName}");
+    }
+
+    /**
      * Get service path
      *
      * @return string
@@ -67,7 +99,19 @@ class MakeService extends Command
     {
         return $this->appPath() . "/" .
             config("easy-repository.service_directory") .
-            "/$className" . "Service.php";
+            "/$className". "/$className" . config("easy-repository.service_suffix") .".php";
+    }
+
+    /**
+     * Get service interface path
+     *
+     * @return string
+     */
+    private function getServiceInterfacePath($className)
+    {
+        return $this->appPath() . "/" .
+            config("easy-repository.service_directory") .
+            "/$className". "/$className" . config("easy-repository.service_interface_suffix") .".php";
     }
 
     /**
@@ -77,7 +121,7 @@ class MakeService extends Command
      */
     private function getRepositoryInterfaceNamespace(string $className)
     {
-        return config("easy-repository.repository_namespace") . "\Interfaces";
+        return config("easy-repository.repository_namespace") . "\\".$className;
     }
 
     /**
@@ -97,7 +141,7 @@ class MakeService extends Command
      */
     private function getRepositoryInterfaceName(string $className)
     {
-        return $className . "RepositoryInterface";
+        return $className . config("easy-repository.repository_interface_suffix");
     }
 
     /**
@@ -106,7 +150,7 @@ class MakeService extends Command
      * @return string
      */
     private function getRepositoryName(string $className) {
-        return $className. "Repository";
+        return $className. config("easy-repository.repository_suffix");
     }
 
     /**
@@ -141,9 +185,9 @@ class MakeService extends Command
             for($i=0; $i < count($explode)-1; $i++) {
                 $namespace .= '\\'.$explode[$i];
             }
-            return config("easy-repository.service_namespace").$namespace;
+            return config("easy-repository.service_namespace").$namespace."\\".$className;
         } else {
-            return config("easy-repository.service_namespace");
+            return config("easy-repository.service_namespace")."\\".$className;
         }
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace {namespace}\{folder};
+namespace {namespace};
 
 use LaravelEasyRepository\Repository;
 
