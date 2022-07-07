@@ -31,7 +31,7 @@ class MakeService extends Command
         $interfaceName = $className.config("easy-repository.service_interface_suffix");
         $serviceName = $className.config("easy-repository.repository_suffix");
 
-        \config()->set("bind-service.".$interfaceName, $serviceName);
+        config()->set("easy-repository.bind_service.".$interfaceName, $serviceName);
     }
 
     /**

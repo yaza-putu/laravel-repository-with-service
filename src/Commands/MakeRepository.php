@@ -47,7 +47,7 @@ class MakeRepository extends Command
         // store bind name config
         $interfaceName = $className.config("easy-repository.repository_interface_suffix");
         $repositoryName = $className.config("easy-repository.repository_suffix");
-        \config()->set("bind-repository.".$interfaceName, $repositoryName);
+        config()->set("easy-repository.bind_repository.".$interfaceName, $repositoryName);
 
         if ($this->option('service')) {
             $this->createService();
