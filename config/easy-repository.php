@@ -20,14 +20,4 @@ return [
      * Default service namespace
      */
     "service_namespace" => "App\Services",
-
-    /**
-     * Default repository implementation
-     */
-    "default_repository_implementation" => "Eloquent",
-
-    /**
-     * Current repository implementation
-     */
-    "current_repository_implementation" => "Eloquent",
 ];

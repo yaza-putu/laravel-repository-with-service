@@ -1,6 +1,6 @@
 <?php
 
-namespace {namespace};
+namespace {namespace}\{folder};
 
 use LaravelEasyRepository\Implementations\Eloquent;
 use {repositoryInterfaceNamespace}\{repositoryInterfaceName};
