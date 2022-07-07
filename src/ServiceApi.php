@@ -22,7 +22,7 @@ class ServiceApi
     public function find($id)
     {
         try {
-            $result = $this->mainInterface->find($id);
+            $result = $this->mainRepository->find($id);
             return $this->setResult($result)
                         ->setCode(200)
                         ->setStatus(true);
@@ -39,7 +39,7 @@ class ServiceApi
     public function findOrFail($id)
     {
         try {
-            $result = $this->mainInterface->findOrFail($id);
+            $result = $this->mainRepository->findOrFail($id);
             return $this->setResult($result)
                 ->setCode(200)
                 ->setStatus(true);
@@ -55,7 +55,7 @@ class ServiceApi
     public function all()
     {
         try {
-            $result = $this->mainInterface->all();;
+            $result = $this->mainRepository->all();;
             return $this->setResult($result)
                 ->setCode(200)
                 ->setStatus(true);
@@ -72,7 +72,7 @@ class ServiceApi
     public function create($data)
     {
         try {
-            $this->mainInterface->create($data);
+            $this->mainRepository->create($data);
             return $this->setMessage($this->title." ".$this->create_message)
                 ->setCode(200)
                 ->setStatus(true);
@@ -90,7 +90,7 @@ class ServiceApi
     public function update($id, array $data)
     {
         try {
-            $this->mainInterface->update($id, $data);
+            $this->mainRepository->update($id, $data);
             return $this->setMessage($this->title." ".$this->update_message)
                 ->setCode(200)
                 ->setStatus(true);
@@ -106,7 +106,7 @@ class ServiceApi
     public function delete($id)
     {
         try {
-            $this->mainInterface->delete($id);
+            $this->mainRepository->delete($id);
             return $this->setMessage($this->title." ".$this->delete_message)
                 ->setCode(200)
                 ->setStatus(true);
@@ -123,7 +123,7 @@ class ServiceApi
     public function destroy(array $id)
     {
         try {
-            $this->mainInterface->destroy($id);
+            $this->mainRepository->destroy($id);
             return $this->setMessage($this->title." ".$this->delete_message)
                 ->setCode(200)
                 ->setStatus(true);
