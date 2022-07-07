@@ -21,12 +21,4 @@ return [
      * Service name suffix
      */
     "service_suffix" => "ServiceImplement",
-
-    "bind_repository" => [
-
-    ],
-
-    "bind_service" => [
-
-    ],
 ];

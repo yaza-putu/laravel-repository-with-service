@@ -20,4 +20,12 @@ return [
      * Default service namespace
      */
     "service_namespace" => "App\Services",
+
+    "bind_repository" => [
+
+    ],
+
+    "bind_service" => [
+
+    ],
 ];
