@@ -32,6 +32,8 @@ class MakeRepository extends Command
         $other = $this->option("other");
 
         $className = Str::studly($name);
+        $arr = explode("/", $className);
+        $className = end($arr);
 
         $this->checkIfRequiredDirectoriesExist($className);
 
