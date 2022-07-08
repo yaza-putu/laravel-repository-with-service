@@ -32,6 +32,10 @@ class MakeService extends Command
         $serviceName = $className.config("easy-repository.repository_suffix");
 
         config()->set("easy-repository.bind_service.".$interfaceName, $serviceName);
+
+        if ($this->option('repository')) {
+            $this->createRepository();
+        }
     }
 
     /**
@@ -196,5 +200,20 @@ class MakeService extends Command
         } else {
             return config("easy-repository.service_namespace")."\\".$className;
         }
+    }
+
+    /**
+     * Create repository for the service
+     *
+     * @return void
+     */
+    private function createRepository()
+    {
+        $name = str_replace(config("easy-repository.service_suffix"), "", $this->argument("name"));
+        $name = Str::studly($name);
+
+        $this->call("make:repository", [
+            "name" => $name,
+        ]);
     }
 }
