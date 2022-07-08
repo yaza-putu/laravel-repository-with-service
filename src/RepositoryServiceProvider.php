@@ -71,7 +71,11 @@ class RepositoryServiceProvider extends ServiceProvider
                 if(array_key_exists($repositoryInterfaceClass, $configBinding)) {
                     $this->app->bind($repositoryInterfaceClass, config("easy-repository.bind_repository.".$repositoryInterfaceClass));
                 } else {
-                    $this->app->bind($repositoryInterfaceClass, $repositoryImplementClass);
+                    foreach ($configBinding as $interface => $implement) {
+                        if($implement !== $repositoryImplementClass) {
+                            $this->app->bind($repositoryInterfaceClass, $repositoryImplementClass);
+                        }
+                    }
                 }
             } else {
                 $this->app->bind($repositoryInterfaceClass, $repositoryImplementClass);
@@ -108,7 +112,11 @@ class RepositoryServiceProvider extends ServiceProvider
                 if(array_key_exists($serviceInterfaceClass, $configBinding)) {
                     $this->app->bind($serviceInterfaceClass, config("easy-repository.bind_service.".$serviceInterfaceClass));
                 } else {
-                    $this->app->bind($serviceInterfaceClass, $serviceImplementClass);
+                    foreach ($configBinding as $interface => $implement) {
+                        if($implement !== $serviceImplementClass) {
+                            $this->app->bind($serviceInterfaceClass, $serviceImplementClass);
+                        }
+                    }
                 }
             } else {
                 $this->app->bind($serviceInterfaceClass, $serviceImplementClass);
