@@ -5,6 +5,8 @@ namespace LaravelEasyRepository;
 use Carbon\Laravel\ServiceProvider;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\File;
+use LaravelEasyRepository\helpers\Search;
 use SplFileInfo;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -26,6 +28,9 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->files = $this->app->make(Filesystem::class);
         if ($this->isConfigPublished()) {
             $this->bindAllRepositories();
+            $this->bindAllServices();
+        } else {
+            throw new \Exception("Config esay repository not found");
         }
     }
 
@@ -47,16 +52,43 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     private function bindAllRepositories()
     {
-        $repositoryInterfaces = $this->getRepositoryInterfaces();
+        $repositoryInterfaces = $this->getRepositoryPath();
         foreach ($repositoryInterfaces as $key => $repositoryInterface) {
-            $className = str_replace(config("easy-repository.repository_interface_suffix"), "", $repositoryInterface);
-            $repositoryName = $this->getRepositoryFileName($className);
-            $repositories = $this->getRepositoryFiles();
-            if ($repositories->contains($repositoryName)) {
-                $repositoryInterface = $this->getRepositoryInterfaceNamespace() . $repositoryInterface;
-                $repository = $this->getRepositoryNamespace() . "\\" . $repositoryName;
-                $this->app->bind($repositoryInterface, $repository);
-            }
+            $repositoryInterfaceClass =  config("easy-repository.repository_namespace"). "\\"
+                                        . $repositoryInterface. "\\"
+                                        . $repositoryInterface
+                                        . config("easy-repository.repository_interface_suffix");
+
+            $repositoryImplementClass = config("easy-repository.repository_namespace"). "\\"
+                                        . $repositoryInterface. "\\"
+                                        . $repositoryInterface
+                                        . config("easy-repository.repository_suffix");
+            $this->app->bind($repositoryInterfaceClass, $repositoryImplementClass);
+        }
+    }
+
+    /**
+     * bind all service
+     */
+    private function bindAllServices() {
+        $servicePath = $this->getServicePath();
+        foreach ($servicePath as $serviceName) {
+            $splitname = explode("/", $serviceName);
+            $className = end($splitname);
+
+            $pathService = str_replace("/", "\\", $serviceName);
+
+            $serviceInterfaceClass =  config("easy-repository.service_namespace"). "\\"
+                . $pathService. "\\"
+                .$className
+                .config("easy-repository.service_interface_suffix");
+
+            $serviceImplementClass = config("easy-repository.repository_namespace"). "\\"
+                . $pathService. "\\"
+                .$className
+                .config("easy-repository.service_suffix");
+
+            $this->app->bind($serviceInterfaceClass, $serviceImplementClass);
         }
     }
 
@@ -65,12 +97,10 @@ class RepositoryServiceProvider extends ServiceProvider
      *
      * @return Collection
      */
-    private function getRepositoryInterfaces()
+    public function getRepository()
     {
         $interfaces = collect([]);
-        if (! $this->files->isDirectory($directory = $this->getRepositoryInterfacesPath())) {
-            return $interfaces;
-        }
+        $directory = $this->getRepositoryPath();
         $files = $this->files->files($directory);
         if (is_array($files)) {
             $interfaces = collect($files)->map(function (SplFileInfo $file) {
@@ -84,25 +114,21 @@ class RepositoryServiceProvider extends ServiceProvider
     /**
      * Get repositories path
      *
-     * @return string
+     * @return array
      */
-    private function getRepositoryInterfacesPath()
+    private function getRepositoryPath()
     {
-        return $this->app->basePath() .
-            "/" . config("easy-repository.repository_directory") .
-            "/Interfaces";
-    }
+        $dirs = File::directories($this->app->basePath() .
+            "/" . config("easy-repository.repository_directory"));
+        $folders = [];
 
-    /**
-     * Get current repository implementation path
-     *
-     * @return string
-     */
-    private function getRepositoryCurrentImplementationPath()
-    {
-        return $this->app->basePath() .
-            "/" . config("easy-repository.repository_directory") .
-            "/" . config("easy-repository.current_repository_implementation");
+        foreach ($dirs as $dir) {
+            $arr = explode("/", $dir);
+
+            $folders[] = end($arr);
+        }
+
+        return $folders;
     }
 
     /**
@@ -110,9 +136,9 @@ class RepositoryServiceProvider extends ServiceProvider
      *
      * @return string
      */
-    private function getRepositoryInterfaceNamespace()
+    private function getRepositoryInterfaceNamespace(string $className)
     {
-        return config("easy-repository.repository_namespace") . "\Interfaces\\";
+        return config("easy-repository.repository_namespace") . "\\".$className."\\";
     }
 
     /**
@@ -120,10 +146,10 @@ class RepositoryServiceProvider extends ServiceProvider
      *
      * @return string
      */
-    private function getRepositoryNamespace()
+    private function getRepositoryNamespace(string $className)
     {
         return config("easy-repository.repository_namespace") .
-            "\\" . config("easy-repository.current_repository_implementation");
+            "\\" . $className;
     }
 
     /**
@@ -144,9 +170,7 @@ class RepositoryServiceProvider extends ServiceProvider
     private function getRepositoryFiles()
     {
         $repositories = collect([]);
-        if (! $this->files->isDirectory($repositoryDirectory = $this->getRepositoryCurrentImplementationPath())) {
-            return $repositories;
-        }
+        $repositoryDirectory = $this->getRepositoryPath();
         $files = $this->files->files($repositoryDirectory);
         if (is_array($files)) {
             $repositories = collect($files)->map(function (SplFileInfo $file) {
@@ -155,6 +179,23 @@ class RepositoryServiceProvider extends ServiceProvider
         }
 
         return $repositories;
+    }
+
+    /**
+     * get service path
+     * @return array
+     */
+    private function getServicePath() {
+        $root = $this->app->basePath() .
+            "/" . config("easy-repository.service_directory");
+
+        $path = Search::file($root, ["php"]);
+
+        $servicePath = [];
+        foreach ($path as $file) {
+            $servicePath[] = str_replace("Services/","",strstr($file->getPath(), "Services"));
+        }
+        return array_unique($servicePath);
     }
 
     /**
