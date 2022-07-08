@@ -5,7 +5,7 @@ namespace LaravelEasyRepository;
 
 use LaravelEasyRepository\Traits\ResultService;
 
-class ServiceApi
+class ServiceApi implements BaseService
 {
     use ResultService;
 

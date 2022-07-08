@@ -4,7 +4,7 @@ namespace LaravelEasyRepository;
 
 use Exception;
 
-class Service
+class Service implements BaseService
 {
 
     /**
