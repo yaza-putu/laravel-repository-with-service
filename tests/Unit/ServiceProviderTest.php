@@ -87,6 +87,9 @@ class ServiceProviderTest extends TestCase
 
         $serviceProvider = [];
 
+        // check binding
+        $configBinding = config("easy-repository.bind_service");
+
         foreach ($servicePath as $serviceName) {
             $splitname = explode("/", $serviceName);
             $className = end($splitname);
@@ -103,20 +106,14 @@ class ServiceProviderTest extends TestCase
                 .$className
                 .config("easy-repository.service_suffix");
 
+            if (count($configBinding) > 0) {
+                if(array_key_exists($serviceInterfaceClass, $configBinding)) {
+                    var_dump(config("easy-repository.bind_service.".$serviceInterfaceClass));
+                }
+            }
+
             $serviceProvider[] = [$serviceInterfaceClass, $serviceImplementClass];
 
-        }
-
-        // check binding
-        $configBinding = config("easy-repository.bind_service");
-
-        if (count($configBinding) > 0) {
-            foreach ($configBinding as $key => $provider) {
-                if(str_contains($key, "\\") && str_contains($provider, "\\")) {
-
-                }
-               // bind here
-            }
         }
 
         $this->assertArrayHasKey(0, $serviceProvider);
