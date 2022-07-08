@@ -20,19 +20,4 @@ return [
      * Default service namespace
      */
     "service_namespace" => "App\Services",
-
-    /**
-     * change bind repository on IoC
-     */
-    "bind_repository" => [
-        // "NameOfInterface" => "NameOfImplementClass"
-    ],
-
-    /**
-     * change bind service on IoC
-     */
-    "bind_service" => [
-        // "NameOfInterface" => "NameOfImplementClass"
-        "App\Services\User\UserService" => "App\Services\SecondServiceImplement"
-    ],
 ];
