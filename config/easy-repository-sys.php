@@ -5,15 +5,20 @@ return [
     /**
      * Repository interface name suffix
      */
-    "repository_interface_suffix" => "RepositoryInterface",
+    "repository_interface_suffix" => "Repository",
 
     /**
      * Repository name suffix
      */
-    "repository_suffix" => "Repository",
+    "repository_suffix" => "RepositoryImplement",
+
+    /**
+     * Service interface name suffix
+     */
+    "service_interface_suffix" => "Service",
 
     /**
      * Service name suffix
      */
-    "service_suffix" => "Service"
+    "service_suffix" => "ServiceImplement",
 ];

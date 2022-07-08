@@ -1,0 +1,34 @@
+<?php
+
+namespace {namespace};
+
+use LaravelEasyRepository\ServiceApi;
+use {repositoryInterfaceNamespace}\{repositoryInterfaceName};
+
+class {serviceName} extends ServiceApi implements {serviceInterface}{
+
+    /**
+     * set message api for CRUD
+     * @param string $title
+     * @param string $create_message
+     * @param string $update_message
+     * @param string $delete_message
+     */
+     protected $title = "";
+     protected $create_message = "";
+     protected $update_message = "";
+     protected $delete_message = "";
+
+     /**
+     * don't change $this->mainRepository variable name
+     * because used in extends service class
+     */
+     protected $mainRepository;
+
+    public function __construct({repositoryInterfaceName} $mainRepository)
+    {
+      $this->mainRepository = $mainRepository;
+    }
+
+    // Define your custom methods :)
+}

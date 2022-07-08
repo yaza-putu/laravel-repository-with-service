@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) mwakalingajohn <mwakalingajohn@gmail.com>
+Copyright (c) putu yaza <wayan13yasa@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

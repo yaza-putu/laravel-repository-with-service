@@ -3,7 +3,6 @@
 namespace {namespace};
 
 use LaravelEasyRepository\Implementations\Eloquent;
-use {repositoryInterfaceNamespace}\{repositoryInterfaceName};
 use App\Models\{ModelName};
 
 class {repositoryName} extends Eloquent implements {repositoryInterfaceName}{

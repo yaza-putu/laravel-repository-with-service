@@ -3,6 +3,7 @@
 namespace LaravelEasyRepository\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 use LaravelEasyRepository\AssistCommand;
 use LaravelEasyRepository\CreateFile;
@@ -25,14 +26,16 @@ class MakeRepository extends Command
      */
     public function handle()
     {
-        $name = str_replace(config("easy-repository.repository_suffix"), "", $this->argument("name"));
+        $name = str_replace(config("easy-repository.repository_interface_suffix"), "", $this->argument("name"));
         $name = Str::studly($name);
 
         $other = $this->option("other");
 
         $className = Str::studly($name);
+        $arr = explode("/", $className);
+        $className = end($arr);
 
-        $this->checkIfRequiredDirectoriesExist();
+        $this->checkIfRequiredDirectoriesExist($className);
 
         // First we create the repoisitory interface in the interfaces directory
         // This will be implemented by the interface class
@@ -55,7 +58,7 @@ class MakeRepository extends Command
      */
     private function createService()
     {
-        $name = str_replace(config("easy-repository.repository_suffix"), "", $this->argument("name"));
+        $name = str_replace(config("easy-repository.repository_interface_suffix"), "", $this->argument("name"));
         $name = Str::studly($name);
 
         $this->call("make:service", [
@@ -71,7 +74,7 @@ class MakeRepository extends Command
      */
     public function createRepositoryInterface(string $className)
     {
-        $repositoryInterfaceNamespace = config("easy-repository.repository_namespace") . "\Interfaces";
+        $repositoryInterfaceNamespace = config("easy-repository.repository_namespace") . "\\".$className;
         $repositoryInterfaceName = $className . config("easy-repository.repository_interface_suffix");
         $stubProperties = [
             "{namespace}" => $repositoryInterfaceNamespace,
@@ -97,18 +100,15 @@ class MakeRepository extends Command
      * @param string $className
      * @return void
      */
-    private function createRepository(string $className, $isDefault = true)
+    public function createRepository(string $className, $isDefault = true)
     {
-        $repositoryNamespace = $isDefault
-            ? config("easy-repository.repository_namespace") . "\\" . $this->getDefaultImplementation()
-            : config("easy-repository.repository_namespace");
+        $repositoryNamespace = config("easy-repository.repository_namespace") . "\\" . $className;
 
         $repositoryName = $className . config("easy-repository.repository_suffix");
         $stubProperties = [
             "{namespace}" => $repositoryNamespace,
             "{repositoryName}" => $repositoryName,
-            "{repositoryInterfaceNamespace}" => $this->getRepositoryInterfaceNamespace($className),
-            "{repositoryInterfaceName}" => $className . "RepositoryInterface",
+            "{repositoryInterfaceName}" => $className . config("easy-repository.repository_interface_suffix"),
             "{ModelName}"   => $className
         ];
 
@@ -131,7 +131,7 @@ class MakeRepository extends Command
      */
     private function getRepositoryInterfaceNamespace(string $className)
     {
-        return config("easy-repository.repository_namespace") . "\Interfaces";
+        return config("easy-repository.repository_namespace") . "\\". $className;
     }
 
     /**
@@ -143,7 +143,7 @@ class MakeRepository extends Command
     {
         return $this->appPath() . "/" .
             config("easy-repository.repository_directory") .
-            "/Interfaces/$className" . config("easy-repository.repository_interface_suffix") . ".php";
+            "/$className/$className" . config("easy-repository.repository_interface_suffix") . ".php";
     }
 
     /**
@@ -154,7 +154,7 @@ class MakeRepository extends Command
     private function getRepositoryPath($className, $isDefault)
     {
         $path = $isDefault
-            ? "/" . $this->getDefaultImplementation() . "/$className" . "Repository.php"
+            ? "/" . $className . "/$className" . config("easy-repository.repository_suffix").".php"
             : "/Other/$className" .  config("easy-repository.repository_suffix") . ".php";
 
         return $this->appPath() . "/" .
@@ -166,20 +166,10 @@ class MakeRepository extends Command
      *
      * @return void
      */
-    private function checkIfRequiredDirectoriesExist()
+    private function checkIfRequiredDirectoriesExist(string $className)
     {
         $this->ensureDirectoryExists(config("easy-repository.repository_directory"));
-        $this->ensureDirectoryExists(config("easy-repository.repository_directory") . "/Interfaces");
-        $this->ensureDirectoryExists(config("easy-repository.repository_directory") . "/" . $this->getDefaultImplementation());
-    }
-
-    /**
-     * Get default repository implementation
-     *
-     * @return string
-     */
-    private function getDefaultImplementation()
-    {
-        return config("easy-repository.default_repository_implementation");
+        $this->ensureDirectoryExists(config("easy-repository.repository_directory") . "/". $className);
+        $this->ensureDirectoryExists(config("easy-repository.repository_directory") . "/" . $className);
     }
 }
