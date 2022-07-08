@@ -20,4 +20,20 @@ return [
      * Default service namespace
      */
     "service_namespace" => "App\Services",
+
+    /**
+     * extend service bind
+     * Change resolved interface container to new implement class
+     */
+    "extend_bind_services" => [
+        "app\Services\User\UserService" => "app\Services\Second\SecondServiceImplement"
+    ],
+
+    /**
+     * extend repository bind
+     * Change resolved interface container to new implement class
+     */
+    "extend_bind_repositories" => [
+
+    ]
 ];

@@ -67,6 +67,9 @@ class RepositoryServiceProvider extends ServiceProvider
 
             $this->app->bind($repositoryInterfaceClass, $repositoryImplementClass);
         }
+
+        // call extend repository container
+        $this->extendRepositoryBind();
     }
 
     /**
@@ -93,6 +96,8 @@ class RepositoryServiceProvider extends ServiceProvider
 
             $this->app->bind($serviceInterfaceClass, $serviceImplementClass);
         }
+        // call extend service
+        $this->extendServiceBind();
     }
 
     /**
@@ -199,6 +204,28 @@ class RepositoryServiceProvider extends ServiceProvider
             $servicePath[] = str_replace("Services/","",strstr($file->getPath(), "Services"));
         }
         return array_unique($servicePath);
+    }
+
+    private function extendServiceBind() {
+        $configs = config("easy-repository.extend_bind_services");
+        if($this->count($configs) > 0) {
+            foreach ($configs as $interface => $implement) {
+                $this->app->extend($interface, function ($service, $app) use ($implement){
+                    return new $implement($service);
+                });
+            }
+        }
+    }
+
+    private function extendRepositoryBind() {
+        $configs = config("easy-repository.extend_bind_repositories");
+        if($this->count($configs) > 0) {
+            foreach ($configs as $interface => $implement) {
+                $this->app->extend($interface, function ($service, $app) use ($implement){
+                    return new $implement($service);
+                });
+            }
+        }
     }
 
     /**
