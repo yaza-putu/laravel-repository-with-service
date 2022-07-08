@@ -13,7 +13,8 @@ class MakeService extends Command
     use AssistCommand;
 
     public $signature = 'make:service
-        {name : The name of the service }';
+        {name : The name of the service }
+        {--repository : Create a repository along with the service}?';
 
     public $description = 'Create a new service class';
 
@@ -27,11 +28,6 @@ class MakeService extends Command
         $this->createServiceInterface($className);
 
         $this->createService($className);
-
-        $interfaceName = $className.config("easy-repository.service_interface_suffix");
-        $serviceName = $className.config("easy-repository.repository_suffix");
-
-        config()->set("easy-repository.bind_service.".$interfaceName, $serviceName);
 
         if ($this->option('repository')) {
             $this->createRepository();
