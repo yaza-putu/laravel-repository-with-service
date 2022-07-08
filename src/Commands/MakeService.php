@@ -49,7 +49,7 @@ class MakeService extends Command
         $stubProperties = [
             "{namespace}" => $namespace,
             "{serviceName}" => $serviceName,
-            "{serviceInterface}" => $serviceName,
+            "{serviceInterface}" => $nameOfService. config("easy-repository.service_interface_suffix"),
             "{repositoryInterfaceName}" => $this->getRepositoryInterfaceName($nameOfService),
             "{repositoryInterfaceNamespace}" => $this->getRepositoryInterfaceNamespace($nameOfService),
         ];
