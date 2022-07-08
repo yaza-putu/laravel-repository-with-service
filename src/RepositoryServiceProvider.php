@@ -65,6 +65,17 @@ class RepositoryServiceProvider extends ServiceProvider
                                         . config("easy-repository.repository_suffix");
             $this->app->bind($repositoryInterfaceClass, $repositoryImplementClass);
         }
+
+        // check binding
+        $configBinding = config("easy-repository.bind_repository");
+
+        if (count($configBinding) > 0) {
+            foreach ($configBinding as $interface => $implementBinding) {
+                if(str_contains($interface, "\\") && str_contains($implementBinding, "\\")) {
+                    $this->app->bind($interface, $implementBinding);
+                }
+            }
+        }
     }
 
     /**
@@ -89,6 +100,17 @@ class RepositoryServiceProvider extends ServiceProvider
                 .config("easy-repository.service_suffix");
 
             $this->app->bind($serviceInterfaceClass, $serviceImplementClass);
+        }
+
+        // check binding
+        $configBinding = config("easy-repository.bind_service");
+
+        if (count($configBinding) > 0) {
+            foreach ($configBinding as $interface => $implementBinding) {
+                if(str_contains($interface, "\\") && str_contains($implementBinding, "\\")) {
+                    $this->app->bind($interface, $implementBinding);
+                }
+            }
         }
     }
 

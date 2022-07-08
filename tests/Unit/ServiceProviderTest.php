@@ -104,8 +104,20 @@ class ServiceProviderTest extends TestCase
                 .config("easy-repository.service_suffix");
 
             $serviceProvider[] = [$serviceInterfaceClass, $serviceImplementClass];
+
         }
 
+        // check binding
+        $configBinding = config("easy-repository.bind_service");
+
+        if (count($configBinding) > 0) {
+            foreach ($configBinding as $key => $provider) {
+                if(str_contains($key, "\\") && str_contains($provider, "\\")) {
+
+                }
+               // bind here
+            }
+        }
 
         $this->assertArrayHasKey(0, $serviceProvider);
     }

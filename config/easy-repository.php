@@ -33,5 +33,6 @@ return [
      */
     "bind_service" => [
         // "NameOfInterface" => "NameOfImplementClass"
+        "App\Services\User\UserService" => "App\Services\SecondServiceImplement"
     ],
 ];
