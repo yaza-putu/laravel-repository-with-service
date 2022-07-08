@@ -3,7 +3,6 @@
 namespace {namespace};
 
 use LaravelEasyRepository\Service;
-use {namespace}\{serviceInterface};
 use {repositoryInterfaceNamespace}\{repositoryInterfaceName};
 
 class {serviceName} extends Service implements {serviceInterface}{
