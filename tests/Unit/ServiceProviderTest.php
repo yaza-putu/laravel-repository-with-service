@@ -98,7 +98,7 @@ class ServiceProviderTest extends TestCase
                 .$className
                 .config("easy-repository.service_interface_suffix");
 
-            $serviceImplementClass = config("easy-repository.repository_namespace"). "\\"
+            $serviceImplementClass = config("easy-repository.service_namespace"). "\\"
                 . $pathService. "\\"
                 .$className
                 .config("easy-repository.service_suffix");

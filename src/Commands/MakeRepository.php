@@ -111,7 +111,6 @@ class MakeRepository extends Command
         $stubProperties = [
             "{namespace}" => $repositoryNamespace,
             "{repositoryName}" => $repositoryName,
-            "{repositoryInterfaceNamespace}" => $this->getRepositoryInterfaceNamespace($className),
             "{repositoryInterfaceName}" => $className . config("easy-repository.repository_interface_suffix"),
             "{ModelName}"   => $className
         ];
