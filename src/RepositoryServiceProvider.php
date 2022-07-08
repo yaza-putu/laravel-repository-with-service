@@ -208,7 +208,7 @@ class RepositoryServiceProvider extends ServiceProvider
 
     private function extendServiceBind() {
         $configs = config("easy-repository.extend_bind_services");
-        if($this->count($configs) > 0) {
+        if(count($configs) > 0) {
             foreach ($configs as $interface => $implement) {
                 $this->app->extend($interface, function ($service, $app) use ($implement){
                     return new $implement($service);
@@ -219,7 +219,7 @@ class RepositoryServiceProvider extends ServiceProvider
 
     private function extendRepositoryBind() {
         $configs = config("easy-repository.extend_bind_repositories");
-        if($this->count($configs) > 0) {
+        if(count($configs) > 0) {
             foreach ($configs as $interface => $implement) {
                 $this->app->extend($interface, function ($service, $app) use ($implement){
                     return new $implement($service);
