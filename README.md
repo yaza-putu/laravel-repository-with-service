@@ -76,11 +76,28 @@ you can override basic method crud for re-write code logic
 
 
 ## Example code
-1. Repository
-2. Service
-3. Service Api
+1. Controller <br>
+you can call interface of service with automatic injection depedency [read more detail](https://laravel.com/docs/9.x/container#automatic-injection) 
+![sample controller](https://res.cloudinary.com/dk0053zbe/image/upload/v1657282450/easy-repository/user-controller_vykrwc.png)
+controller only call interface of service not class implement of service
+2. Service <br>
+sample in interface of service, the interface bind to class implementation
+![sample interface service](https://res.cloudinary.com/dk0053zbe/image/upload/v1657282435/easy-repository/user-interface_hicrrc.png)
+sample code in class implementation
+![sample class implement service](https://res.cloudinary.com/dk0053zbe/image/upload/v1657282457/easy-repository/user-service_dmudfs.png)
+class implement service only call interface of repository with automatic injection depedency
+, service not recommended direct call method on class implement of repository
+3. Repository <br>
+sample interface of repository
+![sample interface repository](https://res.cloudinary.com/dk0053zbe/image/upload/v1657282449/easy-repository/interface-repository_wqxhp6.png)
+sample code implement of repository, implement repository extend with basic CRUD query logic
+![sample implement repository](https://res.cloudinary.com/dk0053zbe/image/upload/v1657282450/easy-repository/class-implement_fsa36d.png)
+
+4. implement class of service api
+diferent implement service with implement service api only on extend class
+![implement class api](https://res.cloudinary.com/dk0053zbe/image/upload/v1657282469/easy-repository/class-service-api_dcxrop.png)
+output or response with extend ServiceApi, more detail you can read code on ServiceApi
 ```
-- output or response like this if service implement extend ServiceApi class
 ```json
 {
     "success": true,
@@ -98,6 +115,7 @@ you can override basic method crud for re-write code logic
     ]
 }
 ```
+
 
 ## Changelog
 
