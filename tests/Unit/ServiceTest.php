@@ -46,4 +46,26 @@ class ServiceTest extends TestCase
 
         $this->assertEquals($name, $className);
     }
+
+    /**
+     * test create namespace on service
+     */
+    public function test_make_namespace() {
+
+        $className = "Book/Category";
+        $namespace = "";
+
+        $explode = explode('/', $className);
+        if (count($explode) > 1) {
+            $namespace = '';
+            for($i=0; $i < count($explode)-1; $i++) {
+                $namespace .= '\\'.$explode[$i];
+            }
+           $namespace = config("easy-repository.service_namespace").$namespace."\\".end($explode);
+        } else {
+            $namespace = config("easy-repository.service_namespace")."\\".$className;
+        }
+
+        $this->assertStringEndsWith("Category", $namespace);
+    }
 }

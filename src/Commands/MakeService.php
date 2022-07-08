@@ -192,7 +192,7 @@ class MakeService extends Command
             for($i=0; $i < count($explode)-1; $i++) {
                 $namespace .= '\\'.$explode[$i];
             }
-            return config("easy-repository.service_namespace").$namespace."\\".$className;
+            return config("easy-repository.service_namespace").$namespace."\\".end($explode);
         } else {
             return config("easy-repository.service_namespace")."\\".$className;
         }
