@@ -26,45 +26,6 @@ Publish the config file with (Important):
 php artisan vendor:publish --provider="LaravelEasyRepository\LaravelEasyRepositoryServiceProvider" --tag="easy-repository-config"
 ```
 
-The configurations in the config file are standard, and can be extended with/depending on further requirements. No need to change any of the contents, unless you are very aware of what you are doing :)
-This is the contents of the published config file:
-
-```php
-
-return [
-    /**
-     * The directory for all the repositories
-     */
-    "repository_directory" => "app/Repositories",
-
-    /**
-     * Default repository namespace
-     */
-    "repository_namespace" => "App\Repositories",
-
-    /**
-     * The directory for all the services
-     */
-    "service_directory" => "app/Services",
-
-    /**
-     * Default service namespace
-     */
-    "service_namespace" => "App\Services",
-
-    /**
-     * Default repository implementation
-     */
-    "default_repository_implementation" => "Eloquent",
-
-    /**
-     * Current repository implementation
-     */
-    "current_repository_implementation" => "Eloquent",
-];
-
-```
-
 ## Quick usage
 
 You can also create only the repository, or service, or both with artisan:
@@ -83,232 +44,43 @@ php artisan make:repository UserRepository --service
 php artisan make:service User
 // or
 php artisan make:service UserService
+// or
+php artisan make:service UserService --repository
+
+// create service for api template
+php artisan make:service UserService --api
 
 ```
 
-The `php artisan make:repository User` will generate two files. One for the interface, and one for the repository class. The interface is bound to it's counter part class automatically depending on the current implementation being used. If the implementation for an interface is not provided, you can provide one manually or otherwise, attempting to use the service will bring up an error.
+## How it works
+This package support for generate Service & Repository pattern with artisan command : <br>
+- On service you can write bussines logic <br>
+- On Repository you can write a query logic for database
 
-Eloquent is the default implementation. Other implementations will be added in the future. This is because the package was mainly to simplify usage of the repository pattern in laravel. The classes created are:
+if you use command php artisan make:service or repository, this command will generate 2 file: <br>
+- interface 
+- implement class
 
+interface auto bind to class implement with container laravel, for detail you can read [read docs bind interface with implement](https://laravel.com/docs/9.x/container#binding-interfaces-to-implementations)
+you can call method on interface to access method in class implement.
+
+if you need to change or modification bind interface to new implement class you can add this config to AppServiceProvider :
 ```php
-// app/Repositories/Interfaces/UserRepository.php
-
-<?php
-
-namespace App\Repositories\Interfaces;
-
-use LaravelEasyRepository\Repository;
-
-class UserRepositoryInterface extends Repository{
-
-    // Write something awesome :)
-}
-
+    $this->app->extend(Interface::class, function ($service, $app) {
+        return new NewImplement($service);
+    });
 ```
 
-and,
+class implement extend with service or Elequent for handel basic method CRUD like, create, update, delete, findOrFail <br>
+you can override basic method crud for re-write code logic
 
-```php
-// app/Repositories/Eloquent/UserRepository.php
 
-<?php
-
-namespace App\Repositories\Eloquent;
-
-use LaravelEasyRepository\Repository;
-use LaravelEasyRepository\Implementations\Eloquent;
-use App\Repositories\Interfaces\UserRepositoryInterface;
-
-class UserRepository extends Eloquent implements UserRepositoryInterface{
-
-    /**
-    * Model class to be used in this repository for the common methods inside Eloquent
-    * Don't remove or change variable $model or $this->model
-    * @property Model|mixed $model;
-    */
-    protected $model;
-
-    public function __construct(Model $model)
-    {
-        $this->model = $model;
-    }
-}
-
+## Example code
+1. Repository
+2. Service
+3. Service Api
 ```
-
-also if you included the services flag, or created one by running a command, the service file generated, the service only call interfaces and automatically bind to repository.
-
-```php
-// app/Services/UserService
-
-<?php
-
-namespace App\Services;
-
-use App\Repository\Interfaces\UserRepositoryInterface;
-class UserService extends Service{
-
-   /**
-   * don't change $this->mainInterface variable name
-   * because used in service class
-   */
-   protected $mainInterface;
-
-  public function __construct(UserRepositoryInterface $mainInterface)
-  {
-    $this->mainInterface = $mainInterface;
-  }
-
-   // Define your custom methods :)
-}
-
-```
-In your controller you can use like
-
-```php
-<?php
-
-namespace App\Http\Controllers;
-
-use App\Services\UserService;
-use Illuminate\Http\Request;
-
-class UserController extends Controller
-{
-    public function __construct(UserService $userService)
-    {
-        $this->userService = $userService;
-    }
-    
-    public function all () {
-      return $this->userService->all();
-    }
-
-}
-
-```
-
-The repository and service also comes in built with 5 common CRUD methods
-
-```php
-
-interface Repository
-{
-    /**
-     * Fin an item by id
-     * @param int $id
-     * @return Model|null
-     */
-    public function find(int $id);
-
-    /**
-     * Find or fail an item by id
-     * @param int $id
-     * @return Model|null
-     */
-    public function findOrFail(int $id);
-
-    /**
-     * Return all items
-     * @return Collection|null
-     */
-    public function all();
-
-    /**
-     * Create an item
-     * @param array|mixed $data
-     * @return Model|null
-     */
-    public function create($data);
-
-    /**
-     * Update a model
-     * @param int|mixed $id
-     * @param array|mixed $data
-     * @return bool|mixed
-     */
-    public function update($id, array $data);
-
-    /**
-     * Delete a model
-     * @param int|Model $id
-     */
-    public function delete($id);
-
-    /**
-     * multiple delete
-     * @param array $id
-     * @return mixed
-     */
-    public function destroy(array $id);
-
-}
-
-```
-
-## Addons for build rest api with Response, Result Service like
-- in service
-```php
-<?php
-
-namespace App\Services;
-
-use LaravelEasyRepository\ServiceApi; 
-use App\Repository\Interfaces\UserRepositoryInterface;
-
-class UserService extends ServiceApi {
-
-  /**
-    * don't change $this->mainInterface variable name
-    * because used in service class
-    */
-    protected $mainInterface;
-
-   public function __construct(UserRepositoryInterface $mainInterface)
-   {
-     $this->mainInterface = $mainInterface;
-   }
-
-    // Define your custom methods :)
-    
-    public function all () {
-        try {
-            $result = $this->mainInterface->all();
-            return $this->setStatus(true)
-                        ->setResult($result)
-                        ->setCode(200)
-                        ->setMessage('your message');
-        } catch (\Exception $e) {
-            return $this->exceptionResponse($e);
-        }            
-    }    
-}
-```
-- in controller
-```php
-<?php
-
-namespace App\Http\Controllers;
-
-use App\Services\UserService;
-use Illuminate\Http\Request;
-use LaravelEasyRepository\Traits\Response;
-
-class UserController extends Controller
-{
-   use Response;
-    public function __construct(UserService $mainService)
-    {
-        $this->mainService = $mainService;
-    }
-    
-    public function all () {
-      return $this->mainService->all()->toJson();
-    }
-
-}
-```
-- output or response like
+- output or response like this if service implement extend ServiceApi class
 ```json
 {
     "success": true,

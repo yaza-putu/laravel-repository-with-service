@@ -21,7 +21,7 @@ class MakeService extends Command
 
     public function handle()
     {
-        $name = str_replace(config("easy-repository.service_suffix"), "", $this->argument("name"));
+        $name = str_replace(config("easy-repository.service_interface_suffix"), "", $this->argument("name"));
         $className = Str::studly($name);
 
         $this->checkIfRequiredDirectoriesExist();
@@ -214,7 +214,7 @@ class MakeService extends Command
      */
     private function createRepository()
     {
-        $name = str_replace(config("easy-repository.service_suffix"), "", $this->argument("name"));
+        $name = str_replace(config("easy-repository.service_interface_suffix"), "", $this->argument("name"));
         $name = Str::studly($name);
 
         $this->call("make:repository", [
