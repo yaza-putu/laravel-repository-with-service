@@ -31,7 +31,7 @@ class RepositoryServiceProvider extends ServiceProvider
             $this->bindAllRepositories();
             $this->bindAllServices();
         } else {
-           Artisan::call('vendor:publish --provider="LaravelEasyRepository\LaravelEasyRepositoryServiceProvider" --tag="easy-repository-config"');
+           echo "Please publish config easy repository";
         }
     }
 
