@@ -120,16 +120,19 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     private function getRepositoryPath()
     {
-        $this->app->make(Filesystem::class)->ensureDirectoryExists(config("easy-repository.repository_directory"));
-        $dirs = File::directories($this->app->basePath() .
-            "/" . config("easy-repository.repository_directory"));
         $folders = [];
+        if(file_exists($this->app->basePath() . "/" . config("easy-repository.repository_directory"))) {
+            $dirs = File::directories($this->app->basePath() .
+                "/" . config("easy-repository.repository_directory"));
+            foreach ($dirs as $dir) {
+                $arr = explode("/", $dir);
 
-        foreach ($dirs as $dir) {
-            $arr = explode("/", $dir);
+                $folders[] = end($arr);
+            }
+        } else {
 
-            $folders[] = end($arr);
         }
+
 
         return $folders;
     }
@@ -189,16 +192,19 @@ class RepositoryServiceProvider extends ServiceProvider
      * @return array
      */
     private function getServicePath() {
-        $this->app->make(Filesystem::class)->ensureDirectoryExists(config("easy-repository.service_directory"));
         $root = $this->app->basePath() .
             "/" . config("easy-repository.service_directory");
-
-        $path = Search::file($root, ["php"]);
-
         $servicePath = [];
-        foreach ($path as $file) {
-            $servicePath[] = str_replace("Services/","",strstr($file->getPath(), "Services"));
+
+        if(file_exists($root)) {
+            $path = Search::file($root, ["php"]);
+
+
+            foreach ($path as $file) {
+                $servicePath[] = str_replace("Services/","",strstr($file->getPath(), "Services"));
+            }
         }
+
         return array_unique($servicePath);
     }
 
