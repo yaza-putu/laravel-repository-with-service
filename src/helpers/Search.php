@@ -4,6 +4,8 @@
 namespace LaravelEasyRepository\helpers;
 
 
+use function League\Flysystem\Local\ensureDirectoryExists;
+
 class Search
 {
     /**
@@ -12,6 +14,9 @@ class Search
      * @return array [SplFileInfo]
      */
     static function file($folder, $pattern_array) {
+        // check directory exsist
+        ensureDirectoryExists($folder);
+
         $return = array();
         $iti = new \RecursiveDirectoryIterator($folder);
         foreach(new \RecursiveIteratorIterator($iti) as $file){
