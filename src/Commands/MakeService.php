@@ -176,6 +176,7 @@ class MakeService extends Command
      */
     private function checkIfRequiredDirectoriesExist()
     {
+        $this->ensureDirectoryExists(config("easy-repository.repository_directory"));
         $this->ensureDirectoryExists(config("easy-repository.service_directory"));
     }
 

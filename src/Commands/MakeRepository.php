@@ -169,6 +169,7 @@ class MakeRepository extends Command
     private function checkIfRequiredDirectoriesExist(string $className)
     {
         $this->ensureDirectoryExists(config("easy-repository.repository_directory"));
+        $this->ensureDirectoryExists(config("easy-repository.service_directory"));
         $this->ensureDirectoryExists(config("easy-repository.repository_directory") . "/". $className);
         $this->ensureDirectoryExists(config("easy-repository.repository_directory") . "/" . $className);
     }
