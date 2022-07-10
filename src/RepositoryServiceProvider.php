@@ -30,8 +30,6 @@ class RepositoryServiceProvider extends ServiceProvider
         if ($this->isConfigPublished()) {
             $this->bindAllRepositories();
             $this->bindAllServices();
-        } else {
-           echo "Please publish config easy repository";
         }
     }
 
