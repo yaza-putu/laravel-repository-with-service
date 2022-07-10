@@ -26,6 +26,11 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // check ensure main folder services
+        $this->app->make(Filesystem::class)->ensureDirectoryExists(config("easy-repository.service_directory"));
+        // check ensure main folder repository
+        $this->app->make(Filesystem::class)->ensureDirectoryExists(config("easy-repository.repository_directory"));
+
         $this->files = $this->app->make(Filesystem::class);
         if ($this->isConfigPublished()) {
             $this->bindAllRepositories();
