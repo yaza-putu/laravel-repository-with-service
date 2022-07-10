@@ -7,7 +7,6 @@ use Illuminate\Support\Str;
 use LaravelEasyRepository\AssistCommand;
 use LaravelEasyRepository\CreateFile;
 use File;
-use LaravelEasyRepository\helpers\FolderHandler;
 
 class MakeService extends Command
 {
@@ -177,8 +176,7 @@ class MakeService extends Command
      */
     private function checkIfRequiredDirectoriesExist()
     {
-        $path = app()->basePath(). "/" .config("easy-repository.service_directory");
-        FolderHandler::createFolder($path);
+        $this->ensureDirectoryExists(config("easy-repository.service_directory"));
     }
 
     /**

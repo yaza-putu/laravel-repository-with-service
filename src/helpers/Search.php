@@ -3,6 +3,9 @@
 
 namespace LaravelEasyRepository\helpers;
 
+
+use Illuminate\Filesystem\Filesystem;
+
 class Search
 {
     /**
@@ -12,7 +15,7 @@ class Search
      */
     static function file($folder, $pattern_array) {
         // check directory exsist
-       FolderHandler::createFolder($folder);
+       app()->make(Filesystem::class)->ensureDirectoryExists($folder);
 
         $return = array();
         $iti = new \RecursiveDirectoryIterator($folder);
