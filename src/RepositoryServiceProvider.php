@@ -5,6 +5,7 @@ namespace LaravelEasyRepository;
 use Carbon\Laravel\ServiceProvider;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use LaravelEasyRepository\helpers\Search;
 use SplFileInfo;
@@ -29,8 +30,6 @@ class RepositoryServiceProvider extends ServiceProvider
         if ($this->isConfigPublished()) {
             $this->bindAllRepositories();
             $this->bindAllServices();
-        } else {
-            throw new \Exception("Config esay repository not found");
         }
     }
 
