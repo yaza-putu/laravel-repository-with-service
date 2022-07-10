@@ -73,7 +73,7 @@ class MakeService extends Command
             $this->getServicePath($className, $nameOfService),
             $stubPath
         );
-        $this->line("<info>Created service:</info> {$serviceName}");
+        $this->line("<info>Created $className service implement:</info> {$serviceName}");
     }
 
     /**
@@ -103,7 +103,7 @@ class MakeService extends Command
             $this->getServiceInterfacePath($className,$serviceName),
             __DIR__ . "/stubs/service-interface.stub"
         );
-        $this->line("<info>Created interface of service:</info> {$serviceName}");
+        $this->line("<info>Created $className service interface:</info> {$serviceName}");
     }
 
     /**

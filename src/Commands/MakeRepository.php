@@ -119,7 +119,7 @@ class MakeRepository extends Command
             $repositoryPath,
             __DIR__ . "/stubs/$stubName"
         );
-        $this->line("<info>Created $className repository:</info> " . $repositoryName);
+        $this->line("<info>Created $className repository implement:</info> " . $repositoryName);
 
         return $repositoryNamespace . "\\" . $className;
     }
