@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 use LaravelEasyRepository\AssistCommand;
 use LaravelEasyRepository\CreateFile;
+use LaravelEasyRepository\helpers\FolderHandler;
 
 class MakeRepository extends Command
 {
@@ -168,9 +169,9 @@ class MakeRepository extends Command
      */
     private function checkIfRequiredDirectoriesExist(string $className)
     {
-        $this->ensureDirectoryExists(config("easy-repository.repository_directory"));
-        $this->ensureDirectoryExists(config("easy-repository.service_directory"));
-        $this->ensureDirectoryExists(config("easy-repository.repository_directory") . "/". $className);
-        $this->ensureDirectoryExists(config("easy-repository.repository_directory") . "/" . $className);
+        $base_path = app()->basePath()."/";
+        FolderHandler::createFolder($base_path.config("easy-repository.repository_directory"));
+        FolderHandler::createFolder($base_path.config("easy-repository.repository_directory") . "/". $className);
+        FolderHandler::createFolder($base_path.config("easy-repository.repository_directory") . "/" . $className);
     }
 }

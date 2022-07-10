@@ -7,7 +7,6 @@ namespace LaravelEasyRepository\Tests\Unit;
 use LaravelEasyRepository\Tests\TestCase;
 class FolderTest extends TestCase
 {
-
     /**
      * @group folder_test
      */
