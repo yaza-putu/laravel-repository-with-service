@@ -14,11 +14,6 @@ You can install the package via composer
 ```bash
 $ composer require yaza/laravel-repository-service
 ```
-- For Laravel 8
-```bash
-$ composer require yaza/laravel-repository-service:^1.5
-```
-
 
 Publish the config file with (Important):
 
