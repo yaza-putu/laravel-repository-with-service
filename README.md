@@ -4,13 +4,11 @@ With easy repository, you can have the power of the repository pattern, without 
 
 ## Requirement
 
-- Laravel 9 need PHP ^8.*
-- Laravel 8 need PHP ~7.4||^8.*
+- Minimum PHP ^8.1
 
 ## Installation
 
 You can install the package via composer
-- For Laravel 9
 ```bash
 $ composer require yaza/laravel-repository-service
 ```
