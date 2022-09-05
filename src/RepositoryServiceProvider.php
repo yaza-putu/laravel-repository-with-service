@@ -125,6 +125,7 @@ class RepositoryServiceProvider extends ServiceProvider
             $dirs = File::directories($this->app->basePath() .
                 "/" . config("easy-repository.repository_directory"));
             foreach ($dirs as $dir) {
+                $dir = str_replace('\\', '/', $dir);
                 $arr = explode("/", $dir);
 
                 $folders[] = end($arr);
@@ -201,7 +202,9 @@ class RepositoryServiceProvider extends ServiceProvider
 
 
             foreach ($path as $file) {
-                $servicePath[] = str_replace("Services/","",strstr($file->getPath(), "Services"));
+                $file_path = strstr($file->getPath(), "Services");
+                $file_path = str_replace('\\', '/', $file_path);
+                $servicePath[] = str_replace("Services/","",$file_path);
             }
         }
 
