@@ -100,6 +100,21 @@ sample code implement of repository, implement repository extend with basic CRUD
 diferent implement service with implement service api only on extend class
 ![implement class api](https://res.cloudinary.com/dk0053zbe/image/upload/v1657282469/easy-repository/class-service-api_dcxrop.png)
 
+manual make set result data in service
+```php
+    public function methodName($id)
+    {
+        try {
+            $result = $this->mainRepository->find($id);
+            return $this->setResult($result)
+                        ->setCode(200)
+                        ->setStatus(true);
+        } catch (\Exception $exception) {
+            return $this->exceptionResponse($exception);
+        }
+    }
+```
+
 5. on your controller need call ->toJson() end of method service to auto generate response json from ServiceApi extends class
 ```php
 public function methodNameOnController() {
