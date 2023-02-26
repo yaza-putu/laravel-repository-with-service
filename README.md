@@ -107,6 +107,7 @@ manual make set result data in service
         try {
             $result = $this->mainRepository->find($id);
             return $this->setResult($result)
+                        ->setMessage('message')
                         ->setCode(200)
                         ->setStatus(true);
         } catch (\Exception $exception) {
