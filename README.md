@@ -8,9 +8,19 @@ With easy repository, you can have the power of the repository pattern, without 
 
 ## Installation
 
-You can install the package via composer
+You can install the package via composer for latest version
 ```bash
 $ composer require yaza/laravel-repository-service
+```
+
+specific version :
+
+| Laravel Version |  Package Version   |
+|:---------------:|:------------------:|
+|       10        |        4.x         |
+  | 9              | 3.2                |
+```bash
+$ composer require yaza/laravel-repository-service:"^3.2"
 ```
 
 Publish the config file with (Important):
