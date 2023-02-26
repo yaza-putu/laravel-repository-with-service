@@ -96,8 +96,7 @@ sample interface of repository
 sample code implement of repository, implement repository extend with basic CRUD query logic
 ![sample implement repository](https://res.cloudinary.com/dk0053zbe/image/upload/v1657282450/easy-repository/class-implement_fsa36d.png)
 
-4. implement class of service api
-diferent implement service with implement service api only on extend class
+4. Make Api With Service (Need Extend ServiceApi Class)
 ![implement class api](https://res.cloudinary.com/dk0053zbe/image/upload/v1657282469/easy-repository/class-service-api_dcxrop.png)
 
 Manual make set result data in service
