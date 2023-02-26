@@ -13,7 +13,7 @@ You can install the package via composer for latest version
 $ composer require yaza/laravel-repository-service
 ```
 
-specific version :
+Specific Version :
 
 | Laravel Version |  Package Version   |
 |:---------------:|:------------------:|
