@@ -2,6 +2,9 @@
 
 With easy repository, you can have the power of the repository pattern, without having to write too much code altogether. The package automatically binds the interfaces to the implementations, all you have to do is change in the configuration which implementation is being used at the moment!
 
+# Documentation
+[Read Documentation](http://bit.ly/repository-service-pattern-guide)
+
 ## Requirement
 
 - Minimum PHP ^8.1
