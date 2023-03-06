@@ -55,7 +55,7 @@ php artisan make:service UserService --api
 
 ```
 # Documentation
-[Click Here](http://bit.ly/repository-service-pattern-guide)
+Go to guide [Click Here](http://bit.ly/repository-service-pattern-guide)
 
 ## Changelog
 
