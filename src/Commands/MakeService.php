@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use LaravelEasyRepository\AssistCommand;
 use LaravelEasyRepository\CreateFile;
-use File;
+use Illuminate\Support\Facades\File;
 
 class MakeService extends Command
 {
@@ -54,24 +54,25 @@ class MakeService extends Command
             "{repositoryInterfaceName}" => $this->getRepositoryInterfaceName($nameOfService),
             "{repositoryInterfaceNamespace}" => $this->getRepositoryInterfaceNamespace($nameOfService),
         ];
+        if($this->needSeparateToClassDirectory()){
         // check folder exist
         $folder = str_replace('\\','/', $namespace);
         if (!file_exists($folder)) {
             File::makeDirectory($folder, 0775, true, true);
         }
-
+        }
         // check command api
         if($this->option("api")) {
-            $stubPath = __DIR__ . "/stubs/service-api.stub";
+            $stubFileName = 'service-api.stub';
         } else {
-            $stubPath = __DIR__ . "/stubs/service.stub";
+            $stubFileName = 'service.stub';
         }
 
         // create file
         new CreateFile(
             $stubProperties,
             $this->getServicePath($className, $nameOfService),
-            $stubPath
+            $stubFileName
         );
         $this->line("<info>Created $className service implement:</info> {$serviceName}");
     }
@@ -92,16 +93,19 @@ class MakeService extends Command
             "{namespace}" => $namespace,
             "{serviceInterface}" => $serviceName,
         ];
-        // check folder exist
-        $folder = str_replace('\\','/', $namespace);
-        if (!file_exists($folder)) {
-            File::makeDirectory($folder, 0775, true, true);
+
+        if($this->needSeparateToClassDirectory()){
+            // check folder exist
+            $folder = str_replace('\\','/', $namespace);
+            if (!file_exists($folder)) {
+                File::makeDirectory($folder, 0775, true, true);
+            }
         }
         // create file
         new CreateFile(
             $stubProperties,
             $this->getServiceInterfacePath($className,$serviceName),
-            __DIR__ . "/stubs/service-interface.stub"
+             'service-interface.stub'
         );
         $this->line("<info>Created $className service interface:</info> {$serviceName}");
     }
@@ -115,7 +119,7 @@ class MakeService extends Command
     {
         return $this->appPath() . "/" .
             config("easy-repository.service_directory") .
-            "/$className". "/$servicename" . config("easy-repository.service_suffix") .".php";
+            $this->getPathPrepend($className). "/$servicename" . config("easy-repository.service_suffix") .".php";
     }
 
     /**
@@ -127,7 +131,7 @@ class MakeService extends Command
     {
         return $this->appPath() . "/" .
             config("easy-repository.service_directory") .
-            "/$className". "/$servicename" .".php";
+            $this->getPathPrepend($className). "/$servicename" .".php";
     }
 
     /**

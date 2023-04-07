@@ -5,6 +5,7 @@ namespace LaravelEasyRepository;
 
 use Exception;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\File;
 
 class CreateFile
 {
@@ -35,9 +36,10 @@ class CreateFile
      */
     protected FileSystem $files;
 
-    public function __construct(array $stubProperties, string $path, string $stubPath)
+    public function __construct(array $stubProperties, string $path, string $stubFileName)
     {
-        $this->stubPath = $stubPath;
+        $stubDirectory=$this->getStubDirectory();
+        $this->stubPath = $stubDirectory.DIRECTORY_SEPARATOR.$stubFileName;
         $this->stubProperties = $stubProperties;
         $this->path = $path;
         $this->files = app()->make(Filesystem::class);
@@ -46,9 +48,24 @@ class CreateFile
     }
 
     /**
+     * Get Stub directory if stubs published
+     *
+     * @return string
+     */
+    private function getStubDirectory() :string
+    {
+        $packageName=str(__NAMESPACE__)->snake('-');
+        if(File::exists(base_path('stubs'.DIRECTORY_SEPARATOR.$packageName))){
+            return base_path('stubs'.DIRECTORY_SEPARATOR.$packageName);
+        }else{
+            return __DIR__ .DIRECTORY_SEPARATOR.'stubs';
+        }
+    }
+
+    /**
      * Check if file already exists
      *
-     * @return bool
+     * @return bool|Exception
      */
     private function fileExists()
     {
