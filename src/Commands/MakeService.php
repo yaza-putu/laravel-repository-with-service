@@ -24,7 +24,7 @@ class MakeService extends Command
         $name = str_replace(config("easy-repository.service_interface_suffix"), "", $this->argument("name"));
         $className = Str::studly($name);
 
-        $this->checkIfRequiredDirectoriesExist();
+        $this->checkIfRequiredDirectoriesExist($className);
 
         $this->createServiceInterface($className);
 
@@ -55,7 +55,7 @@ class MakeService extends Command
             "{repositoryInterfaceNamespace}" => $this->getRepositoryInterfaceNamespace($nameOfService),
         ];
         // check folder exist
-        $folder = str_replace('\\','/', $namespace);
+        $folder = config('easy-repository.service_directory' . "/$serviceName");
         if (!file_exists($folder)) {
             File::makeDirectory($folder, 0775, true, true);
         }
@@ -93,7 +93,7 @@ class MakeService extends Command
             "{serviceInterface}" => $serviceName,
         ];
         // check folder exist
-        $folder = str_replace('\\','/', $namespace);
+        $folder = config('easy-repository.service_directory' . "/$serviceName");
         if (!file_exists($folder)) {
             File::makeDirectory($folder, 0775, true, true);
         }
@@ -174,9 +174,10 @@ class MakeService extends Command
      *
      * @return void
      */
-    private function checkIfRequiredDirectoriesExist()
+    private function checkIfRequiredDirectoriesExist($classname)
     {
         $this->ensureDirectoryExists(config("easy-repository.service_directory"));
+        $this->ensureDirectoryExists(config("easy-repository.service_directory"). "/$classname");
     }
 
     /**
