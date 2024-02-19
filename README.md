@@ -54,6 +54,15 @@ php artisan make:service UserService --repository
 php artisan make:service UserService --api
 
 ```
+
+## How to change bind interface to new class implementation
+Add this config to AppServiceProvider :
+```php
+$this->app->extend(Interface::class, function ($service, $app) {
+    return new NewImplement($service);
+});
+```
+
 # Documentation
 Go to guide [Click Here](http://bit.ly/repository-service-pattern-guide)
 
