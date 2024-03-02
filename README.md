@@ -64,7 +64,7 @@ $this->app->extend(Interface::class, function ($service, $app) {
 ```
 
 # Documentation
-Go to guide [Click Here](http://bit.ly/repository-service-pattern-guide)
+Go to guide [Click Here](https://yaza-putu.github.io)
 
 ## Changelog
 
