@@ -43,7 +43,7 @@ class Service implements BaseService
      */
     public function create($data)
     {
-        $this->mainRepository->create($data);
+        return $this->mainRepository->create($data);
     }
 
     /**

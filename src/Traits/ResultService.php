@@ -10,51 +10,30 @@ use Exception;
 
 trait ResultService
 {
-    private $result = null;
-    private $status = false;
+    private $data = null;
     private $message = null;
     private $code = null;
+    private $errors = [];
 
     /**
-     * set result output
-     * @param $result
+     * set data output
+     * @param $data
      * @return $this
      */
-    public function setResult($result)
+    public function setData($data)
     {
-        $this->result = $result;
+        $this->data = $data;
 
         return $this;
     }
 
     /**
-     * get result
+     * get data
      * @return null
      */
-    public function getResult()
+    public function getData()
     {
-        return $this->result;
-    }
-
-    /**
-     * set status
-     * @param $status
-     * @return $this
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * get status
-     * @return bool
-     */
-    public function getStatus()
-    {
-        return $this->status;
+        return $this->data;
     }
 
     /**
@@ -99,6 +78,27 @@ trait ResultService
         return $this->code;
     }
 
+
+    /**
+     * set errors
+     * @param $error
+     * @return $this
+     */
+    public function setError($error)
+    {
+        $this->errors = $error;
+        return $this;
+    }
+
+    /**
+     * get errors
+     * @return array
+     */
+    public function getError()
+    {
+        return $this->errors;
+    }
+
     /**
      * Exception Response
      *
@@ -109,8 +109,7 @@ trait ResultService
     {
         if ($exception instanceof QueryException) {
             if ($exception->errorInfo[1] == 1451) {
-                return $this->setStatus(false)
-                    ->setMessage('Data masih terpakai di Data Lain!')
+                return $this->setMessage('This data cannot be removed because it is still in use.')
                     ->setCode(400);
             }
         }
@@ -118,8 +117,7 @@ trait ResultService
             if (!request()->expectsJson()) {
                 return abort(404);
             }
-            return $this->setStatus(false)
-                ->setMessage('Data tidak ditemukan!')
+            return $this->setMessage('Data not found')
                 ->setCode(404);
         }
         if (config('app.debug')) {
@@ -130,13 +128,12 @@ trait ResultService
                 'line' => $exception->getLine(),
                 'trace' => $exception->getTrace()
             ];
-            return $this->setStatus(false)
-                ->setMessage($message)
+            return $this->setError($message)
+                ->setMessage("internal server error")
                 ->setCode(500);
         }
 
-        return $this->setStatus(false)
-            ->setMessage('Terjadi suatu kesalahan!')
+        return $this->setMessage('internal server error')
             ->setCode(500);
     }
 
@@ -147,16 +144,16 @@ trait ResultService
     public function toJson()
     {
         if(is_null($this->getCode())){
-            $http_code = $this->getStatus() ? 200 : 400;
+            $http_code = 200;
         }else{
             $http_code = $this->getCode();
         }
 
         return response()->json([
-            'success' => $this->getStatus(),
             'code' => $http_code,
             'message' => $this->getMessage(),
-            'data' => $this->getResult(),
+            'data' => $this->getData(),
+            'errors' => $this->getError(),
         ], $http_code);
     }
 }
