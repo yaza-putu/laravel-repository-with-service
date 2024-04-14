@@ -24,7 +24,7 @@ class MakeService extends Command
         $name = str_replace(config("easy-repository.service_interface_suffix"), "", $this->argument("name"));
         $className = Str::studly($name);
 
-        $this->checkIfRequiredDirectoriesExist();
+        $this->checkIfRequiredDirectoriesExist($className);
 
         $this->createServiceInterface($className);
 
@@ -58,11 +58,6 @@ class MakeService extends Command
         if(file_exists($this->getServicePath($className,$nameOfService))) {
             $this->error("file $className repository already exist");
             return ;
-        }
-        // check folder exist
-        $folder = $this->getPath($className);
-        if (!file_exists($folder)) {
-            File::makeDirectory($folder, 0775, true, true);
         }
 
         // check command blank
@@ -102,11 +97,7 @@ class MakeService extends Command
             $this->error("file $className repository interface already exist");
             return ;
         }
-        // check folder exist
-        $folder = $this->getPath($className);
-        if (!file_exists($folder)) {
-            File::makeDirectory($folder, 0775, true, true);
-        }
+
         // create file
         new CreateFile(
             $stubProperties,
@@ -184,9 +175,10 @@ class MakeService extends Command
      *
      * @return void
      */
-    private function checkIfRequiredDirectoriesExist()
+    private function checkIfRequiredDirectoriesExist($className)
     {
         $this->ensureDirectoryExists(config("easy-repository.service_directory"));
+        $this->ensureDirectoryExists(config("easy-repository.service_directory").'/'.$className);
     }
 
     /**
@@ -214,19 +206,6 @@ class MakeService extends Command
             return config("easy-repository.service_namespace").$namespace."\\".end($explode);
         } else {
             return config("easy-repository.service_namespace")."\\".$className;
-        }
-    }
-
-    private function getPath($className):string {
-        $explode = explode('/', $className);
-        if (count($explode) > 1) {
-            $namespace = '';
-            for($i=0; $i < count($explode)-1; $i++) {
-                $namespace .= '\\'.$explode[$i];
-            }
-            return config("easy-repository.service_directory").$namespace."\\".end($explode);
-        } else {
-            return config("easy-repository.service_directory")."\\".$className;
         }
     }
 
