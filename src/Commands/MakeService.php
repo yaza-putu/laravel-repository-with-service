@@ -15,7 +15,7 @@ class MakeService extends Command
     public $signature = 'make:service
         {name : The name of the service }
         {--repository : Create a repository along with the service}?
-        {--api : Create a service with the api template}?';
+        {--blank : Create a service with blank template}?';
 
     public $description = 'Create a new service class';
 
@@ -60,11 +60,11 @@ class MakeService extends Command
             File::makeDirectory($folder, 0775, true, true);
         }
 
-        // check command api
-        if($this->option("api")) {
-            $stubPath = __DIR__ . "/stubs/service-api.stub";
-        } else {
+        // check command blank
+        if($this->option("blank")) {
             $stubPath = __DIR__ . "/stubs/service.stub";
+        } else {
+            $stubPath = __DIR__ . "/stubs/service-api.stub";
         }
 
         // create file
