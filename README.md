@@ -4,7 +4,7 @@ With easy repository, you can have the power of the repository pattern, without 
 
 ## Requirement
 
-- Minimum PHP ^8.1
+- Minimum PHP ^8.2
 
 ## Installation
 
@@ -17,9 +17,13 @@ Specific Version :
 
 | Laravel Version |  Package Version   |
 |:---------------:|:------------------:|
-|       10        |        4.x         |
+|       11        |        5.x         |
+|       10        |        4.0         |
   | 9              | 3.2                |
 ```bash
+# for laravel 10
+$ composer require yaza/laravel-repository-service:"^4.0"
+# for laravel 9
 $ composer require yaza/laravel-repository-service:"^3.2"
 ```
 
@@ -50,8 +54,8 @@ php artisan make:service UserService
 // or
 php artisan make:service UserService --repository
 
-// create service for api template
-php artisan make:service UserService --api
+// create service with blank template
+php artisan make:service UserService --blank
 
 ```
 

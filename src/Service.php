@@ -39,22 +39,22 @@ class Service implements BaseService
     /**
      * Create an item
      * @param array|mixed $data
-     * @return void
+     * @return model|mixed
      */
     public function create($data)
     {
-        $this->mainRepository->create($data);
+        return $this->mainRepository->create($data);
     }
 
     /**
      * Update a model
      * @param int|mixed $id
      * @param array|mixed $data
-     * @return void
+     * @return bool|mixed
      */
     public function update($id, array $data)
     {
-        $this->mainRepository->update($id, $data);
+        return $this->mainRepository->update($id, $data);
     }
 
     /**

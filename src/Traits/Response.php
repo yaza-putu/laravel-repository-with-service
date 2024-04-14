@@ -17,19 +17,19 @@ trait Response
      * @param null $code
      * @return \Illuminate\Http\JsonResponse
      */
-    public function responseJson($status = true, $msg = '', $data = [], $code = null)
+    public function responseJson($msg = '', $data = [], $code = null, $errors = null)
     {
         if(is_null($code)){
-            $http_code = $status ? 200 : 400;
+            $http_code = 200;
         }else{
             $http_code = $code;
         }
 
-        return response()->json([
-            'success' => $status,
+        return response()->json(array_filter([
             'code' => $http_code,
             'message' => $msg,
             'data' => $data,
-        ], $http_code);
+            'errors' => $errors
+        ]), $http_code);
     }
 }

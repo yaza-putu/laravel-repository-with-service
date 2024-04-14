@@ -8,16 +8,16 @@ use {repositoryInterfaceNamespace}\{repositoryInterfaceName};
 class {serviceName} extends ServiceApi implements {serviceInterface}{
 
     /**
-     * set message api for CRUD
+     * set title message api for CRUD
      * @param string $title
-     * @param string $create_message
-     * @param string $update_message
-     * @param string $delete_message
      */
      protected $title = "";
-     protected $create_message = "";
-     protected $update_message = "";
-     protected $delete_message = "";
+     /**
+     * uncomment this to override the default message
+     * protected $create_message = "";
+     * protected $update_message = "";
+     * protected $delete_message = "";
+     */
 
      /**
      * don't change $this->mainRepository variable name

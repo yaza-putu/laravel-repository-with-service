@@ -10,79 +10,80 @@ class ServiceApi implements BaseService
     use ResultService;
 
     protected $title = "";
-    protected $create_message = "";
-    protected $update_message = "";
-    protected $delete_message = "";
+    protected $create_message = "created successfully";
+    protected $update_message = "updated successfully";
+    protected $delete_message = "deleted successfully";
+
 
     /**
-     * Find an item by id
-     * @param mixed $id
-     * @return Model|null
+     * find by id
+     * @param $id
+     * @return \Illuminate\Database\Eloquent\Model|ServiceApi|ResultService|null
      */
     public function find($id)
     {
         try {
             $result = $this->mainRepository->find($id);
-            return $this->setResult($result)
-                        ->setCode(200)
-                        ->setStatus(true);
+            return $this->setData($result)
+                        ->setCode(200);
         } catch (\Exception $exception) {
             return $this->exceptionResponse($exception);
         }
     }
 
+
     /**
-     * Find an item by id or fail
-     * @param mixed $id
-     * @return Model|null
+     * find or fail by id
+     * @param $id
+     * @return ServiceApi|ResultService|mixed
      */
     public function findOrFail($id)
     {
         try {
             $result = $this->mainRepository->findOrFail($id);
-            return $this->setResult($result)
-                ->setCode(200)
-                ->setStatus(true);
+            return $this->setData($result)
+                ->setCode(200);
         } catch (\Exception $exception) {
             return $this->exceptionResponse($exception);
         }
     }
 
+
     /**
-     * Return all items
-     * @return Collection|null
+     * all data
+     * @return \Illuminate\Database\Eloquent\Collection|ServiceApi|ResultService|null
      */
     public function all()
     {
         try {
             $result = $this->mainRepository->all();;
-            return $this->setResult($result)
-                ->setCode(200)
-                ->setStatus(true);
+            return $this->setData($result)
+                ->setCode(200);
         } catch (\Exception $exception) {
             return $this->exceptionResponse($exception);
         }
     }
 
+
     /**
-     * Create an item
-     * @param array|mixed $data
-     * @return Model|null
+     * create data
+     * @param $data
+     * @return \Illuminate\Database\Eloquent\Model|ServiceApi|ResultService|null
      */
     public function create($data)
     {
         try {
-            $this->mainRepository->create($data);
+            $data = $this->mainRepository->create($data);
             return $this->setMessage($this->title." ".$this->create_message)
                 ->setCode(200)
-                ->setStatus(true);
+                ->setData($data);
         } catch (\Exception $exception) {
             return $this->exceptionResponse($exception);
         }
     }
 
     /**
-     * Update a model
+     * Update data
      * @param int|mixed $id
      * @param array|mixed $data
      * @return bool|mixed
@@ -92,15 +93,14 @@ class ServiceApi implements BaseService
         try {
             $this->mainRepository->update($id, $data);
             return $this->setMessage($this->title." ".$this->update_message)
-                ->setCode(200)
-                ->setStatus(true);
+                ->setCode(200);
         } catch (\Exception $exception) {
             return $this->exceptionResponse($exception);
         }
     }
 
     /**
-     * Delete a model
+     * Delete data by id
      * @param int|Model $id
      */
     public function delete($id)
@@ -108,8 +108,7 @@ class ServiceApi implements BaseService
         try {
             $this->mainRepository->delete($id);
             return $this->setMessage($this->title." ".$this->delete_message)
-                ->setCode(200)
-                ->setStatus(true);
+                ->setCode(200);
         } catch (\Exception $exception) {
             return $this->exceptionResponse($exception);
         }
@@ -125,8 +124,7 @@ class ServiceApi implements BaseService
         try {
             $this->mainRepository->destroy($id);
             return $this->setMessage($this->title." ".$this->delete_message)
-                ->setCode(200)
-                ->setStatus(true);
+                ->setCode(200);
         } catch (\Exception $exception) {
             return $this->exceptionResponse($exception);
         }

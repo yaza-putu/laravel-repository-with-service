@@ -15,7 +15,7 @@ class MakeService extends Command
     public $signature = 'make:service
         {name : The name of the service }
         {--repository : Create a repository along with the service}?
-        {--api : Create a service with the api template}?';
+        {--blank : Create a service with the blank template}?';
 
     public $description = 'Create a new service class';
 
@@ -24,7 +24,7 @@ class MakeService extends Command
         $name = str_replace(config("easy-repository.service_interface_suffix"), "", $this->argument("name"));
         $className = Str::studly($name);
 
-        $this->checkIfRequiredDirectoriesExist();
+        $this->checkIfRequiredDirectoriesExist($className);
 
         $this->createServiceInterface($className);
 
@@ -54,17 +54,17 @@ class MakeService extends Command
             "{repositoryInterfaceName}" => $this->getRepositoryInterfaceName($nameOfService),
             "{repositoryInterfaceNamespace}" => $this->getRepositoryInterfaceNamespace($nameOfService),
         ];
-        // check folder exist
-        $folder = str_replace('\\','/', $namespace);
-        if (!file_exists($folder)) {
-            File::makeDirectory($folder, 0775, true, true);
+        // cek file exist
+        if(file_exists($this->getServicePath($className,$nameOfService))) {
+            $this->error("file $className repository already exist");
+            return ;
         }
 
-        // check command api
-        if($this->option("api")) {
-            $stubPath = __DIR__ . "/stubs/service-api.stub";
-        } else {
+        // check command blank
+        if($this->option("blank")) {
             $stubPath = __DIR__ . "/stubs/service.stub";
+        } else {
+            $stubPath = __DIR__ . "/stubs/service-api.stub";
         }
 
         // create file
@@ -92,11 +92,12 @@ class MakeService extends Command
             "{namespace}" => $namespace,
             "{serviceInterface}" => $serviceName,
         ];
-        // check folder exist
-        $folder = str_replace('\\','/', $namespace);
-        if (!file_exists($folder)) {
-            File::makeDirectory($folder, 0775, true, true);
+        // cek file exist
+        if(file_exists($this->getServiceInterfacePath($className,$serviceName))) {
+            $this->error("file $className repository interface already exist");
+            return ;
         }
+
         // create file
         new CreateFile(
             $stubProperties,
@@ -174,9 +175,10 @@ class MakeService extends Command
      *
      * @return void
      */
-    private function checkIfRequiredDirectoriesExist()
+    private function checkIfRequiredDirectoriesExist($className)
     {
         $this->ensureDirectoryExists(config("easy-repository.service_directory"));
+        $this->ensureDirectoryExists(config("easy-repository.service_directory").'/'.$className);
     }
 
     /**
