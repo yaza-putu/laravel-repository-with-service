@@ -15,7 +15,7 @@ class MakeService extends Command
     public $signature = 'make:service
         {name : The name of the service }
         {--repository : Create a repository along with the service}?
-        {--blank : Create a service with blank template}?';
+        {--blank : Create a service with the blank template}?';
 
     public $description = 'Create a new service class';
 
@@ -24,7 +24,7 @@ class MakeService extends Command
         $name = str_replace(config("easy-repository.service_interface_suffix"), "", $this->argument("name"));
         $className = Str::studly($name);
 
-        $this->checkIfRequiredDirectoriesExist($className);
+        $this->checkIfRequiredDirectoriesExist();
 
         $this->createServiceInterface($className);
 
@@ -43,21 +43,26 @@ class MakeService extends Command
      */
     public function createService(string $className)
     {
-        $serviceName = $className . config("easy-repository.service_suffix");
+        $nameOfService = $this->getServiceName($className);
+        $serviceName = $nameOfService . config("easy-repository.service_suffix");
 
         $namespace = $this->getNameSpace($className);
         $stubProperties = [
             "{namespace}" => $namespace,
             "{serviceName}" => $serviceName,
-            "{serviceInterface}" => $className. config("easy-repository.service_interface_suffix"),
-            "{repositoryInterfaceName}" => $this->getRepositoryInterfaceName($className),
-            "{repositoryInterfaceNamespace}" => $this->getRepositoryInterfaceNamespace($className),
+            "{serviceInterface}" => $nameOfService. config("easy-repository.service_interface_suffix"),
+            "{repositoryInterfaceName}" => $this->getRepositoryInterfaceName($nameOfService),
+            "{repositoryInterfaceNamespace}" => $this->getRepositoryInterfaceNamespace($nameOfService),
         ];
-        // check file exist
-        $filePath = $this->getServicePath($className);
-        if (file_exists($filePath)) {
-            $this->error("file $className service already exist");
+        // cek file exist
+        if(file_exists($this->getServicePath($className,$nameOfService))) {
+            $this->error("file $className repository already exist");
             return ;
+        }
+        // check folder exist
+        $folder = $this->getPath($className);
+        if (!file_exists($folder)) {
+            File::makeDirectory($folder, 0775, true, true);
         }
 
         // check command blank
@@ -70,7 +75,7 @@ class MakeService extends Command
         // create file
         new CreateFile(
             $stubProperties,
-            $filePath,
+            $this->getServicePath($className, $nameOfService),
             $stubPath
         );
         $this->line("<info>Created $className service implement:</info> {$serviceName}");
@@ -84,23 +89,28 @@ class MakeService extends Command
      */
     public function createServiceInterface(string $className)
     {
-        $serviceName = $className . config("easy-repository.service_interface_suffix");
+        $nameOfService = $this->getServiceName($className);
+        $serviceName = $nameOfService . config("easy-repository.service_interface_suffix");
 
         $namespace = $this->getNameSpace($className);
         $stubProperties = [
             "{namespace}" => $namespace,
             "{serviceInterface}" => $serviceName,
         ];
-        // check folder exist
-        $interfacePath = $this->getServiceInterfacePath($className,$serviceName);
-        if (file_exists($interfacePath)) {
-            $this->error("file $className service interface already exist");
+        // cek file exist
+        if(file_exists($this->getServiceInterfacePath($className,$serviceName))) {
+            $this->error("file $className repository interface already exist");
             return ;
+        }
+        // check folder exist
+        $folder = $this->getPath($className);
+        if (!file_exists($folder)) {
+            File::makeDirectory($folder, 0775, true, true);
         }
         // create file
         new CreateFile(
             $stubProperties,
-            $interfacePath,
+            $this->getServiceInterfacePath($className,$serviceName),
             __DIR__ . "/stubs/service-interface.stub"
         );
         $this->line("<info>Created $className service interface:</info> {$serviceName}");
@@ -111,11 +121,11 @@ class MakeService extends Command
      *
      * @return string
      */
-    private function getServicePath($className)
+    private function getServicePath($className, $servicename)
     {
         return $this->appPath() . "/" .
             config("easy-repository.service_directory") .
-            "/$className". "/$className" . config("easy-repository.service_suffix") .".php";
+            "/$className". "/$servicename" . config("easy-repository.service_suffix") .".php";
     }
 
     /**
@@ -174,10 +184,9 @@ class MakeService extends Command
      *
      * @return void
      */
-    private function checkIfRequiredDirectoriesExist(string $className)
+    private function checkIfRequiredDirectoriesExist()
     {
         $this->ensureDirectoryExists(config("easy-repository.service_directory"));
-        $this->ensureDirectoryExists(config("easy-repository.service_directory"). "/". $className);
     }
 
     /**
@@ -196,7 +205,29 @@ class MakeService extends Command
      * @return string
      */
     private function getNameSpace($className):string {
-        return config("easy-repository.service_namespace")."\\".$className;
+        $explode = explode('/', $className);
+        if (count($explode) > 1) {
+            $namespace = '';
+            for($i=0; $i < count($explode)-1; $i++) {
+                $namespace .= '\\'.$explode[$i];
+            }
+            return config("easy-repository.service_namespace").$namespace."\\".end($explode);
+        } else {
+            return config("easy-repository.service_namespace")."\\".$className;
+        }
+    }
+
+    private function getPath($className):string {
+        $explode = explode('/', $className);
+        if (count($explode) > 1) {
+            $namespace = '';
+            for($i=0; $i < count($explode)-1; $i++) {
+                $namespace .= '\\'.$explode[$i];
+            }
+            return config("easy-repository.service_directory").$namespace."\\".end($explode);
+        } else {
+            return config("easy-repository.service_directory")."\\".$className;
+        }
     }
 
     /**

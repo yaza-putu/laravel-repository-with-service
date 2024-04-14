@@ -83,7 +83,7 @@ class MakeRepository extends Command
 
         $repositoryInterfacePath = $this->getRepositoryInterfacePath($className);
         if (file_exists($repositoryInterfacePath)) {
-            $this->error("file $className repository interface already exist: {$repositoryInterfaceName}");
+            $this->error("file $className repository interface already exist");
             return ;
         }
 
@@ -118,7 +118,7 @@ class MakeRepository extends Command
         $stubName = $isDefault ? "eloquent-repository.stub" : "custom-repository.stub";
         $repositoryPath = $this->getRepositoryPath($className, $isDefault);
         if (file_exists($repositoryPath)) {
-            $this->error("file $className repository already exist: {$repositoryName}");
+            $this->error("file $className repository already exist");
             return ;
         }
         new CreateFile(
