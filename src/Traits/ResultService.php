@@ -13,7 +13,7 @@ trait ResultService
     private $data = null;
     private $message = null;
     private $code = null;
-    private $errors = [];
+    private $errors = null;
 
     /**
      * set data output
@@ -149,11 +149,11 @@ trait ResultService
             $http_code = $this->getCode();
         }
 
-        return response()->json([
+        return response()->json(array_filter([
             'code' => $http_code,
             'message' => $this->getMessage(),
             'data' => $this->getData(),
             'errors' => $this->getError(),
-        ], $http_code);
+        ]), $http_code);
     }
 }
