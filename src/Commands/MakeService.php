@@ -24,7 +24,7 @@ class MakeService extends Command
         $name = str_replace(config("easy-repository.service_interface_suffix"), "", $this->argument("name"));
         $className = Str::studly($name);
 
-        $this->checkIfRequiredDirectoriesExist();
+        $this->checkIfRequiredDirectoriesExist($className);
 
         $this->createServiceInterface($className);
 
@@ -56,8 +56,9 @@ class MakeService extends Command
         ];
         // check file exist
         $filePath = $this->getServicePath($className, $nameOfService);
-        if (!file_exists($filePath)) {
-            File::makeDirectory($filePath, 0775, true, true);
+        if (file_exists($filePath)) {
+            $this->line("<warning>file $className service already exist:</warning> {$serviceName}");
+            return ;
         }
 
         // check command blank
@@ -94,8 +95,9 @@ class MakeService extends Command
         ];
         // check folder exist
         $interfacePath = $this->getServiceInterfacePath($className,$serviceName);
-        if (!file_exists($interfacePath)) {
-            File::makeDirectory($interfacePath, 0775, true, true);
+        if (file_exists($interfacePath)) {
+            $this->line("<warning>file $className service interface already exist:</warning> {$serviceName}");
+            return ;
         }
         // create file
         new CreateFile(
@@ -174,9 +176,10 @@ class MakeService extends Command
      *
      * @return void
      */
-    private function checkIfRequiredDirectoriesExist()
+    private function checkIfRequiredDirectoriesExist(string $className)
     {
         $this->ensureDirectoryExists(config("easy-repository.service_directory"));
+        $this->ensureDirectoryExists(config("easy-repository.service_directory"). "/". $className);
     }
 
     /**
