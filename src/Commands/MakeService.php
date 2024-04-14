@@ -43,21 +43,20 @@ class MakeService extends Command
      */
     public function createService(string $className)
     {
-        $nameOfService = $this->getServiceName($className);
-        $serviceName = $nameOfService . config("easy-repository.service_suffix");
+        $serviceName = $className . config("easy-repository.service_suffix");
 
         $namespace = $this->getNameSpace($className);
         $stubProperties = [
             "{namespace}" => $namespace,
             "{serviceName}" => $serviceName,
-            "{serviceInterface}" => $nameOfService. config("easy-repository.service_interface_suffix"),
-            "{repositoryInterfaceName}" => $this->getRepositoryInterfaceName($nameOfService),
-            "{repositoryInterfaceNamespace}" => $this->getRepositoryInterfaceNamespace($nameOfService),
+            "{serviceInterface}" => $className. config("easy-repository.service_interface_suffix"),
+            "{repositoryInterfaceName}" => $this->getRepositoryInterfaceName($className),
+            "{repositoryInterfaceNamespace}" => $this->getRepositoryInterfaceNamespace($className),
         ];
         // check file exist
-        $filePath = $this->getServicePath($className, $nameOfService);
+        $filePath = $this->getServicePath($className);
         if (file_exists($filePath)) {
-            $this->line("<warning>file $className service already exist:</warning> {$serviceName}");
+            $this->error("file $className service already exist: {$serviceName}");
             return ;
         }
 
@@ -96,7 +95,7 @@ class MakeService extends Command
         // check folder exist
         $interfacePath = $this->getServiceInterfacePath($className,$serviceName);
         if (file_exists($interfacePath)) {
-            $this->line("<warning>file $className service interface already exist:</warning> {$serviceName}");
+            $this->error("file $className service interface already exist: {$serviceName}");
             return ;
         }
         // create file
@@ -105,6 +104,7 @@ class MakeService extends Command
             $interfacePath,
             __DIR__ . "/stubs/service-interface.stub"
         );
+        $this->info("Service generated successfully");
         $this->line("<info>Created $className service interface:</info> {$serviceName}");
     }
 
@@ -113,11 +113,11 @@ class MakeService extends Command
      *
      * @return string
      */
-    private function getServicePath($className, $servicename)
+    private function getServicePath($className)
     {
         return $this->appPath() . "/" .
             config("easy-repository.service_directory") .
-            "/$className". "/$servicename" . config("easy-repository.service_suffix") .".php";
+            "/$className". "/$className" . config("easy-repository.service_suffix") .".php";
     }
 
     /**
