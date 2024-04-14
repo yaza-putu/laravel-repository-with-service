@@ -68,6 +68,25 @@ $this->app->extend(Interface::class, function ($service, $app) {
 ```
 
 # Documentation
+**Docs for version 5 (comming soon)**
+
+Note : When you create service, the  default used api template,in api template use setter getter data inside service, how to use you can look in file Service Api (extend) inside service file, if you need blank template when create service, you need add argument --blank, ex : php artisan make:service User --blank.
+
+example setter getter service with api template
+```php
+// getter (on service called)
+$serviceName->getData()
+$serviceName->getCode()
+$serviceName->getMessage()
+$serviceName->getError()
+// setter (in service)
+$this->setCode()
+$this->setData()
+$this->setError()
+$this->setMessage()
+```
+More details will be explained in docs version 5.
+
 Go to guide [Click Here](https://yaza-putu.github.io)
 
 ## Changelog
