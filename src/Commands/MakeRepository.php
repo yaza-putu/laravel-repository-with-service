@@ -92,7 +92,6 @@ class MakeRepository extends Command
             $repositoryInterfacePath,
             __DIR__ . "/stubs/repository-interface.stub"
         );
-        $this->info("Repository created successfully");
         $this->line("<info>Created $className repository interface:</info> " . $repositoryInterfaceName);
 
         return $repositoryInterfaceNamespace . "\\" . $className;

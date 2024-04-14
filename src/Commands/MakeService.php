@@ -56,7 +56,7 @@ class MakeService extends Command
         // check file exist
         $filePath = $this->getServicePath($className);
         if (file_exists($filePath)) {
-            $this->error("file $className service already exist: {$serviceName}");
+            $this->error("file $className service already exist");
             return ;
         }
 
@@ -84,8 +84,7 @@ class MakeService extends Command
      */
     public function createServiceInterface(string $className)
     {
-        $nameOfService = $this->getServiceName($className);
-        $serviceName = $nameOfService . config("easy-repository.service_interface_suffix");
+        $serviceName = $className . config("easy-repository.service_interface_suffix");
 
         $namespace = $this->getNameSpace($className);
         $stubProperties = [
@@ -95,7 +94,7 @@ class MakeService extends Command
         // check folder exist
         $interfacePath = $this->getServiceInterfacePath($className,$serviceName);
         if (file_exists($interfacePath)) {
-            $this->error("file $className service interface already exist: {$serviceName}");
+            $this->error("file $className service interface already exist");
             return ;
         }
         // create file
@@ -104,7 +103,6 @@ class MakeService extends Command
             $interfacePath,
             __DIR__ . "/stubs/service-interface.stub"
         );
-        $this->info("Service generated successfully");
         $this->line("<info>Created $className service interface:</info> {$serviceName}");
     }
 
