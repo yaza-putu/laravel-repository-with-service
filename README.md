@@ -70,7 +70,7 @@ $this->app->extend(Interface::class, function ($service, $app) {
 # Documentation
 **Docs for version 5 (comming soon)**
 
-Note : When you create service the default used api template,in api template use setter getter data inside service for how to use you can look in file Service Api (extend) inside service file, if you need blank template when create service, you need add argument --blank, ex : php artisan make:service User --blank.
+Note : When you create service the default used api template,in api template use setter getter data inside service for how to use you can look in src/Traits/ResultService.php, if you need blank template when create service, you need add argument --blank, ex : php artisan make:service User --blank.
 
 example setter getter service with api template
 ```php
