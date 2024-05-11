@@ -201,13 +201,13 @@ trait ResultService
         }
 
         if($this->status !== null) {
-            return response()->json(array_filter([
+            return response()->json([
                 'success' => $this->getStatus(),
                 'code' => $http_code,
                 'message' => $this->getMessage(),
                 'data' => $this->getData(),
                 'errors' => $this->getError(),
-            ]), $http_code);
+            ], $http_code);
         } else {
             return response()->json(array_filter([
                 'code' => $http_code,
