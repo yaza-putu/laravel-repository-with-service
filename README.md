@@ -68,8 +68,6 @@ $this->app->extend(Interface::class, function ($service, $app) {
 ```
 
 # Documentation
-**Docs for version 5 (comming soon)**
-
 Note : When you create service the default used api template,in api template use setter getter data inside service for how to use you can look in src/Traits/ResultService.php, if you need blank template when create service, you need add argument --blank, ex : php artisan make:service User --blank.
 
 example setter getter service with api template
@@ -87,7 +85,7 @@ $this->setMessage()
 ```
 More details will be explained in docs version 5.
 
-Go to guide [Click Here](https://yaza-putu.github.io)
+Go to guide [Click Here]([Docs V5](https://yaza-putu.github.io/laravel-service-repository-pattern-guide/)
 
 ## Changelog
 
