@@ -14,6 +14,57 @@ trait ResultService
     private $message = null;
     private $code = null;
     private $errors = null;
+    /**
+     * @deprecated version
+     */
+    private $status = null;
+
+    /**
+     * set status
+     * @deprecated version
+     * @param $status
+     * @return $this
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * get status
+     * @deprecated version
+     * @return bool
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+
+    /**
+     * set result output
+     * @deprecated version
+     * @param $result
+     * @return $this
+     */
+    public function setResult($result)
+    {
+        $this->data = $result;
+
+        return $this;
+    }
+
+    /**
+     * get result
+     * @deprecated version
+     * @return null
+     */
+    public function getResult()
+    {
+        return $this->data;
+    }
 
     /**
      * set data output
@@ -149,11 +200,21 @@ trait ResultService
             $http_code = $this->getCode();
         }
 
-        return response()->json(array_filter([
-            'code' => $http_code,
-            'message' => $this->getMessage(),
-            'data' => $this->getData(),
-            'errors' => $this->getError(),
-        ]), $http_code);
+        if($this->status !== null) {
+            return response()->json(array_filter([
+                'success' => $this->getStatus(),
+                'code' => $http_code,
+                'message' => $this->getMessage(),
+                'data' => $this->getData(),
+                'errors' => $this->getError(),
+            ]), $http_code);
+        } else {
+            return response()->json(array_filter([
+                'code' => $http_code,
+                'message' => $this->getMessage(),
+                'data' => $this->getData(),
+                'errors' => $this->getError(),
+            ]), $http_code);
+        }
     }
 }
