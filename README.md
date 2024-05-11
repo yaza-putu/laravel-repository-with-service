@@ -85,7 +85,7 @@ $this->setMessage()
 ```
 More details will be explained in docs version 5.
 
-Go to guide [Click Here]([Docs V5](https://yaza-putu.github.io/laravel-service-repository-pattern-guide/))
+Go to guide [Docs V5](https://yaza-putu.github.io/laravel-service-repository-pattern-guide/)
 
 ## Changelog
 
