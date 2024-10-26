@@ -11,7 +11,7 @@ class {serviceName} extends Service implements {serviceInterface}{
      * don't change $this->mainRepository variable name
      * because used in extends service class
      */
-     protected $mainRepository;
+     protected {repositoryInterfaceName} $mainRepository;
 
     public function __construct({repositoryInterfaceName} $mainRepository)
     {

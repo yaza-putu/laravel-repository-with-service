@@ -11,7 +11,7 @@ class {serviceName} extends ServiceApi implements {serviceInterface}{
      * set title message api for CRUD
      * @param string $title
      */
-     protected $title = "";
+     protected string $title = "";
      /**
      * uncomment this to override the default message
      * protected $create_message = "";
@@ -23,7 +23,7 @@ class {serviceName} extends ServiceApi implements {serviceInterface}{
      * don't change $this->mainRepository variable name
      * because used in extends service class
      */
-     protected $mainRepository;
+     protected {repositoryInterfaceName} $mainRepository;
 
     public function __construct({repositoryInterfaceName} $mainRepository)
     {
