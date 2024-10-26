@@ -12,7 +12,7 @@ class {repositoryName} extends Eloquent implements {repositoryInterfaceName}{
     * Don't remove or change $this->model variable name
     * @property Model|mixed $model;
     */
-    protected $model;
+    protected {ModelName} $model;
 
     public function __construct({ModelName} $model)
     {
