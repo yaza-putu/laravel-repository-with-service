@@ -9,10 +9,10 @@ class ServiceApi implements BaseService
 {
     use ResultService;
 
-    protected $title = "";
-    protected $create_message = "created successfully";
-    protected $update_message = "updated successfully";
-    protected $delete_message = "deleted successfully";
+    protected string $title = "";
+    protected string $create_message = "created successfully";
+    protected string $update_message = "updated successfully";
+    protected string $delete_message = "deleted successfully";
 
 
     /**

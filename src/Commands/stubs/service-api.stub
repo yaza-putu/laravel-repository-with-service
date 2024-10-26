@@ -14,9 +14,9 @@ class {serviceName} extends ServiceApi implements {serviceInterface}{
      protected string $title = "";
      /**
      * uncomment this to override the default message
-     * protected $create_message = "";
-     * protected $update_message = "";
-     * protected $delete_message = "";
+     * protected string $create_message = "";
+     * protected string $update_message = "";
+     * protected string $delete_message = "";
      */
 
      /**
