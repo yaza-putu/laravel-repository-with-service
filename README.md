@@ -82,9 +82,9 @@ $this->setData()
 $this->setError()
 $this->setMessage()
 ```
-More details will be explained in docs version 5.
+More details will be explained in docs version 6.
 
-Go to guide [Docs V5](https://yaza-putu.github.io/laravel-service-repository-pattern-guide/)
+Go to guide [Docs V6](https://yaza-putu.github.io/laravel-service-repository-pattern-guide/)
 
 ## Changelog
 
