@@ -17,14 +17,13 @@ Specific Version :
 
 | Laravel Version |  Package Version   |
 |:---------------:|:------------------:|
+|       12        |        6.x         |
 |       11        |        5.x         |
 |       10        |        4.0         |
   | 9              | 3.2                |
 ```bash
-# for laravel 10
-$ composer require yaza/laravel-repository-service:"^4.0"
-# for laravel 9
-$ composer require yaza/laravel-repository-service:"^3.2"
+# for laravel 11
+$ composer require yaza/laravel-repository-service:"^5.0"
 ```
 
 Publish the config file with (Important):
