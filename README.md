@@ -4,7 +4,7 @@ With easy repository, you can have the power of the repository pattern, without 
 
 ## Requirement
 
-- Minimum PHP ^8.2
+- Minimum PHP ^8.4
 
 ## Installation
 
