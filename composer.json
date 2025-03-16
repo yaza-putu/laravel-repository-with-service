@@ -9,7 +9,7 @@
     "homepage": "https://github.com/yaza-putu/laravel-repository-with-service.git",
     "license": "MIT",
     "require": {
-        "php": "^8.4",
+        "php": "^8.2",
         "spatie/laravel-package-tools": "^1.16",
         "illuminate/contracts": "^10.0||^11.0||^12.0"
     },
