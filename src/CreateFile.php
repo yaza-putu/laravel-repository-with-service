@@ -101,6 +101,9 @@ class CreateFile
      */
     private function writeFile($stub)
     {
+        if (!$this->files->isDirectory(dirname($this->path))) {
+            $this->files->makeDirectory(dirname($this->path), 0755, true);
+        }
         $this->files->put($this->path, $stub);
     }
 }

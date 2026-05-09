@@ -17,6 +17,7 @@ class CreateRepositoryTest extends TestCase
      * @group integration
      */
     public function test_create_repository() {
-        $this->artisan("make:repository User");
+        $this->artisan("make:repository User")->assertExitCode(0);
+        $this->assertTrue(file_exists($this->app->basePath('app') . "/Repositories/User/UserRepository.php"));
     }
 }

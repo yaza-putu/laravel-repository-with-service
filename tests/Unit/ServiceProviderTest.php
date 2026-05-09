@@ -31,14 +31,15 @@ class ServiceProviderTest extends TestCase
      */
     public function test_schema_bind_repository()
     {
-            $dirs = File::directories($this->app->basePath() .
-                "/" . config("easy-repository.repository_directory"));
-            $folders = [];
-            foreach ($dirs as $dir) {
-                $arr = explode("/", $dir);
+        $this->artisan('make:repository', ['name' => 'User'])->assertExitCode(0);
+        $dirs = File::directories($this->app->basePath() .
+            "/" . config("easy-repository.repository_directory"));
+        $folders = [];
+        foreach ($dirs as $dir) {
+            $arr = explode("/", $dir);
 
-                $folders[] = end($arr);
-            }
+            $folders[] = end($arr);
+        }
 
         $repositoryInterfaces = $folders;
 
@@ -65,6 +66,7 @@ class ServiceProviderTest extends TestCase
      */
     public function test_schema_bind_service()
     {
+        $this->artisan('make:service', ['name' => 'User'])->assertExitCode(0);
         $dirs = File::directories($this->app->basePath() .
             "/" . config("easy-repository.service_directory"));
         $folders = [];
@@ -106,7 +108,7 @@ class ServiceProviderTest extends TestCase
                 .$className
                 .config("easy-repository.service_suffix");
 
-            if (count($configBinding) > 0) {
+            if (is_array($configBinding) && count($configBinding) > 0) {
                 if(array_key_exists($serviceInterfaceClass, $configBinding)) {
                     var_dump(config("easy-repository.bind_service.".$serviceInterfaceClass));
                 }

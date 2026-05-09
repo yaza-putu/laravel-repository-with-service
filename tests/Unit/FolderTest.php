@@ -12,13 +12,9 @@ class FolderTest extends TestCase
      */
     public function test_folder_repository()
     {
-        $folder_exist = false;
-        if(file_exists($this->app->basePath()."/".config("easy-repository.repository_directory"))) {
-            $folder_exist = true;
-        } else {
-            $folder_exist = false;
-        }
+        $this->artisan('make:repository', ['name' => 'User'])->assertExitCode(0);
+        $folder_exist = file_exists($this->app->basePath()."/".config("easy-repository.repository_directory"));
 
-        $this->assertEquals(true, $folder_exist);
+        $this->assertTrue($folder_exist);
     }
 }

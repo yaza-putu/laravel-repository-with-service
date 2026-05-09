@@ -27,12 +27,19 @@ class ServiceTest extends TestCase
 
     public function test_create_service_interface()
     {
-        $response = $this->service->createServiceInterface($this->surfix);
+        $this->artisan('make:service', ['name' => $this->surfix])->assertExitCode(0);
+        $this->assertTrue(file_exists($this->appPath() . "/Services/{$this->surfix}/{$this->surfix}Service.php"));
     }
 
     public function test_create_service()
     {
-        $response = $this->service->createService($this->surfix, true);
+        $this->artisan('make:service', ['name' => $this->surfix])->assertExitCode(0);
+        $this->assertTrue(file_exists($this->appPath() . "/Services/{$this->surfix}/{$this->surfix}ServiceImplement.php"));
+    }
+
+    protected function appPath()
+    {
+        return $this->app->basePath('app');
     }
 
     /**

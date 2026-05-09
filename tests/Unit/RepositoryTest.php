@@ -25,13 +25,18 @@ class RepositoryTest extends TestCase
 
     public function test_create_repository_interface()
     {
-        $response = $this->repository->createRepositoryInterface($this->surfix);
-        $this->assertEquals(config("easy-repository.repository_namespace") . "\${$this->surfix}", $response);
+        $this->artisan('make:repository', ['name' => $this->surfix])->assertExitCode(0);
+        $this->assertTrue(file_exists($this->appPath() . "/Repositories/{$this->surfix}/{$this->surfix}Repository.php"));
     }
 
     public function test_create_repository()
     {
-        $response = $this->repository->createRepository($this->surfix, true);
-        $this->assertEquals(config("easy-repository.repository_namespace") . "\\".$this->surfix, $response);
+        $this->artisan('make:repository', ['name' => $this->surfix])->assertExitCode(0);
+        $this->assertTrue(file_exists($this->appPath() . "/Repositories/{$this->surfix}/{$this->surfix}RepositoryImplement.php"));
+    }
+
+    protected function appPath()
+    {
+        return $this->app->basePath('app');
     }
 }
