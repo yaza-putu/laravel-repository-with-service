@@ -4,7 +4,7 @@ With easy repository, you can have the power of the repository pattern, without 
 
 ## Requirement
 
-- Minimum PHP ^8.2
+- Minimum PHP ^8.3
 
 ## Installation
 
@@ -17,6 +17,7 @@ Specific Version :
 
 | Laravel Version |  Package Version   |
 |:---------------:|:------------------:|
+|       13        |        7.x         |
 |       12        |        6.x         |
 |       11        |        5.x         |
 |       10        |        4.0         |
